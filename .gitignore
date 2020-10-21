@@ -31,7 +31,7 @@ lerna-debug.log*
 .pnp.js
 
 # next.js
-/.next/
+.next
 /out/
 
 # production
