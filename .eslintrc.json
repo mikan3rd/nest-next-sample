@@ -55,5 +55,5 @@
       "version": "detect"
     }
   },
-  "ignorePatterns": ["node_modules", ".next"]
+  "ignorePatterns": ["node_modules", ".next", "dist"]
 }
