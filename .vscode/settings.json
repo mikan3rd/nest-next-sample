@@ -1,0 +1,12 @@
+{
+  "editor.rulers": [120],
+  "files.trimTrailingWhitespace": true,
+  "editor.renderWhitespace": "all",
+  "css.lint.ieHack": "warning",
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "eslint.packageManager": "yarn",
+  "stylelint.enable": true,
+  "eslint.format.enable": true,
+  "prettier.printWidth": 120,
+  "prettier.trailingComma": "all"
+}
