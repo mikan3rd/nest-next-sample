@@ -4,6 +4,8 @@ import { GraphQLModule } from "@nestjs/graphql";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { AppController } from "../controllers/app.controller";
+import { TaskModel } from "../models/task.model";
+import { TaskModule } from "../modules/task.module";
 import { AppService } from "../services/app.service";
 
 @Module({
@@ -19,9 +21,10 @@ import { AppService } from "../services/app.service";
       username: "root",
       password: "",
       database: "nest_next_sample",
-      entities: [],
+      entities: [TaskModel],
       synchronize: false,
     }),
+    TaskModule,
   ],
   controllers: [AppController],
   providers: [AppService],
