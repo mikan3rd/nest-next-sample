@@ -12,7 +12,7 @@ import { AppService } from "../services/app.service";
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     GraphQLModule.forRoot({
-      autoSchemaFile: "schema.gql",
+      autoSchemaFile: "schema.graphql",
     }),
     TypeOrmModule.forRoot({
       type: "mysql",

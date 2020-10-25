@@ -5,9 +5,6 @@
   "workspaces": [
     "packages/*"
   ],
-  "scripts": {
-    "lint": "eslint ."
-  },
   "devDependencies": {
     "@types/node": "^14.14.0",
     "@typescript-eslint/eslint-plugin": "^4.5.0",

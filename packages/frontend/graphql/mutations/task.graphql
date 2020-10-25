@@ -1,0 +1,6 @@
+mutation deleteTask($id: Float!) {
+  deleteTask(id: $id) {
+    id
+    title
+  }
+}

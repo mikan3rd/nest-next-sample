@@ -16,12 +16,12 @@ scalar DateTime
 
 type Query {
   task(id: Float!): TaskModel
-  accounts: [TaskModel!]!
+  tasks: [TaskModel!]!
 }
 
 type Mutation {
-  saveAccount(task: TaskDTO!): TaskModel!
-  deleteYoutubeChannel(id: Float!): TaskModel
+  saveTask(task: TaskDTO!): TaskModel!
+  deleteTask(id: Float!): TaskModel
 }
 
 input TaskDTO {

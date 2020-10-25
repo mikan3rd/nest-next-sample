@@ -15,17 +15,17 @@ export class TaskResolver {
   }
 
   @Query((returns) => [TaskModel])
-  async accounts() {
+  async tasks() {
     return await this.TaskService.findAll();
   }
 
   @Mutation((returns) => TaskModel)
-  async saveAccount(@Args("task") task: TaskDTO) {
+  async saveTask(@Args("task") task: TaskDTO) {
     return await this.TaskService.save(task);
   }
 
   @Mutation((returns) => TaskModel, { nullable: true })
-  async deleteYoutubeChannel(@Args("id") id: number) {
+  async deleteTask(@Args("id") id: number) {
     return await this.TaskService.delete(id);
   }
 }
