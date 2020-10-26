@@ -1,10 +1,20 @@
 import React from "react";
 
+import { GetServerSideProps, GetServerSidePropsResult } from "next";
 import Head from "next/head";
 
+import { client } from "../graphql/client";
+import { TasksDocument, TasksQuery, TasksQueryVariables, useTasksQuery } from "../graphql/generated";
 import styles from "../styles/Home.module.css";
 
-export default React.memo(() => {
+type Props = { serverSideProps: TasksQuery };
+
+export default React.memo<Props>(({ serverSideProps }) => {
+  const { data } = useTasksQuery();
+
+  console.log("serverSideProps:", serverSideProps);
+  console.log("data:", data);
+
   return (
     <div className={styles.container}>
       <Head>
@@ -59,3 +69,11 @@ export default React.memo(() => {
     </div>
   );
 });
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const { data } = await client.query<TasksQuery, TasksQueryVariables>({
+    query: TasksDocument,
+  });
+  const result: GetServerSidePropsResult<Props> = { props: { serverSideProps: data } };
+  return result;
+};
