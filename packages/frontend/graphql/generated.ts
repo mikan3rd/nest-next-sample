@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { gql } from "@apollo/client";
 import * as Apollo from "@apollo/client";
 export type Maybe<T> = T | null;
@@ -9,16 +10,16 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  /** A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format. */
-  DateTime: any;
+  /** Date custom scalar type */
+  Date: any;
 };
 
 export type TaskModel = {
   __typename?: "TaskModel";
   id: Scalars["ID"];
   title: Scalars["String"];
-  createdAt: Scalars["DateTime"];
-  updatedAt: Scalars["DateTime"];
+  createdAt: Scalars["Date"];
+  updatedAt: Scalars["Date"];
 };
 
 export type Query = {
@@ -55,13 +56,13 @@ export type DeleteTaskMutationVariables = Exact<{
 }>;
 
 export type DeleteTaskMutation = { __typename?: "Mutation" } & {
-  deleteTask?: Maybe<{ __typename?: "TaskModel" } & Pick<TaskModel, "id" | "title">>;
+  deleteTask?: Maybe<{ __typename?: "TaskModel" } & Pick<TaskModel, "id" | "title" | "updatedAt" | "createdAt">>;
 };
 
 export type TasksQueryVariables = Exact<{ [key: string]: never }>;
 
 export type TasksQuery = { __typename?: "Query" } & {
-  tasks: Array<{ __typename?: "TaskModel" } & Pick<TaskModel, "id" | "title">>;
+  tasks: Array<{ __typename?: "TaskModel" } & Pick<TaskModel, "id" | "title" | "updatedAt" | "createdAt">>;
 };
 
 export const DeleteTaskDocument = gql`
@@ -69,6 +70,8 @@ export const DeleteTaskDocument = gql`
     deleteTask(id: $id) {
       id
       title
+      updatedAt
+      createdAt
     }
   }
 `;
@@ -104,6 +107,8 @@ export const TasksDocument = gql`
     tasks {
       id
       title
+      updatedAt
+      createdAt
     }
   }
 `;

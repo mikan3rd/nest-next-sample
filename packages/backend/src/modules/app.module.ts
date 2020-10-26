@@ -6,6 +6,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { AppController } from "../controllers/app.controller";
 import { TaskModel } from "../models/task.model";
 import { TaskModule } from "../modules/task.module";
+import { DateScalar } from "../scalars/date.scalar";
 import { AppService } from "../services/app.service";
 
 @Module({
@@ -27,6 +28,6 @@ import { AppService } from "../services/app.service";
     TaskModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, DateScalar],
 })
 export class AppModule {}
