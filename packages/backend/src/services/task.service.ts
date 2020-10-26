@@ -13,11 +13,11 @@ export class TaskService {
   ) {}
 
   async findOne(id: number) {
-    return this.taskRepository.findOne(id, { relations: ["youtubeChannels"] });
+    return this.taskRepository.findOne(id);
   }
 
   async findAll() {
-    return this.taskRepository.find({ relations: ["youtubeChannels"] });
+    return this.taskRepository.find();
   }
 
   async save(payload: TaskDTO) {

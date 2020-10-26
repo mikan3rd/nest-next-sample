@@ -1,0 +1,28 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type TaskModel {
+  id: ID!
+  title: String!
+  createdAt: Date!
+  updatedAt: Date!
+}
+
+"""Date custom scalar type"""
+scalar Date
+
+type Query {
+  task(id: ID!): TaskModel
+  tasks: [TaskModel!]!
+}
+
+type Mutation {
+  saveTask(task: TaskDTO!): TaskModel!
+  deleteTask(id: ID!): TaskModel
+}
+
+input TaskDTO {
+  id: Float
+  title: String!
+}

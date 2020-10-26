@@ -6,13 +6,14 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { AppController } from "../controllers/app.controller";
 import { TaskModel } from "../models/task.model";
 import { TaskModule } from "../modules/task.module";
+import { DateScalar } from "../scalars/date.scalar";
 import { AppService } from "../services/app.service";
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     GraphQLModule.forRoot({
-      autoSchemaFile: "schema.gql",
+      autoSchemaFile: "schema.graphql",
     }),
     TypeOrmModule.forRoot({
       type: "mysql",
@@ -27,6 +28,6 @@ import { AppService } from "../services/app.service";
     TaskModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, DateScalar],
 })
 export class AppModule {}
