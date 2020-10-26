@@ -1,10 +1,10 @@
-import { Field, ObjectType } from "@nestjs/graphql";
+import { Field, ID, ObjectType } from "@nestjs/graphql";
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @ObjectType()
 @Entity("tasks")
 export class TaskModel {
-  @Field()
+  @Field((type) => ID)
   @PrimaryGeneratedColumn()
   id: number;
 

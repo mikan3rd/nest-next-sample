@@ -3,7 +3,7 @@
 # ------------------------------------------------------
 
 type TaskModel {
-  id: Float!
+  id: ID!
   title: String!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -15,13 +15,13 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 scalar DateTime
 
 type Query {
-  task(id: Float!): TaskModel
+  task(id: ID!): TaskModel
   tasks: [TaskModel!]!
 }
 
 type Mutation {
   saveTask(task: TaskDTO!): TaskModel!
-  deleteTask(id: Float!): TaskModel
+  deleteTask(id: ID!): TaskModel
 }
 
 input TaskDTO {

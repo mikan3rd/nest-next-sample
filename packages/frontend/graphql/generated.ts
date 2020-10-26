@@ -15,7 +15,7 @@ export type Scalars = {
 
 export type TaskModel = {
   __typename?: "TaskModel";
-  id: Scalars["Float"];
+  id: Scalars["ID"];
   title: Scalars["String"];
   createdAt: Scalars["DateTime"];
   updatedAt: Scalars["DateTime"];
@@ -28,7 +28,7 @@ export type Query = {
 };
 
 export type QueryTaskArgs = {
-  id: Scalars["Float"];
+  id: Scalars["ID"];
 };
 
 export type Mutation = {
@@ -42,7 +42,7 @@ export type MutationSaveTaskArgs = {
 };
 
 export type MutationDeleteTaskArgs = {
-  id: Scalars["Float"];
+  id: Scalars["ID"];
 };
 
 export type TaskDto = {
@@ -51,7 +51,7 @@ export type TaskDto = {
 };
 
 export type DeleteTaskMutationVariables = Exact<{
-  id: Scalars["Float"];
+  id: Scalars["ID"];
 }>;
 
 export type DeleteTaskMutation = { __typename?: "Mutation" } & {
@@ -65,7 +65,7 @@ export type TasksQuery = { __typename?: "Query" } & {
 };
 
 export const DeleteTaskDocument = gql`
-  mutation deleteTask($id: Float!) {
+  mutation deleteTask($id: ID!) {
     deleteTask(id: $id) {
       id
       title
