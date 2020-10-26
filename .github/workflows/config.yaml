@@ -43,7 +43,7 @@ jobs:
         uses: actions/upload-artifact@main
         with:
           name: backend-build-files
-          path: backend/dist
+          path: packages/backend/dist
 
   frontend-build:
     runs-on: macos-latest
