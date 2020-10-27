@@ -5,7 +5,9 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { AppController } from "../controllers/app.controller";
 import { TaskModel } from "../models/task.model";
+import { TaskContentModel } from "../models/taskContent.model";
 import { TaskModule } from "../modules/task.module";
+import { TaskContentModule } from "../modules/taskContent.module";
 import { DateScalar } from "../scalars/date.scalar";
 import { AppService } from "../services/app.service";
 
@@ -22,10 +24,11 @@ import { AppService } from "../services/app.service";
       username: "root",
       password: "",
       database: "nest_next_sample",
-      entities: [TaskModel],
+      entities: [TaskModel, TaskContentModel],
       synchronize: false,
     }),
     TaskModule,
+    TaskContentModule,
   ],
   controllers: [AppController],
   providers: [AppService, DateScalar],
