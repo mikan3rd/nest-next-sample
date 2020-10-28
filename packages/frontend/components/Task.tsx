@@ -6,7 +6,7 @@ import { Button, Header, Icon } from "semantic-ui-react";
 import { TaskContent } from "../components/TaskContent";
 import { TaskContentModel, TaskModel } from "../graphql/generated";
 
-type TaskType = Omit<TaskModel, "taskContents"> & { taskContents: Omit<TaskContentModel, "task"> };
+type TaskType = Omit<TaskModel, "taskContents"> & { taskContents: Omit<TaskContentModel, "task">[] };
 
 export const Task = React.memo<{ task: TaskType }>(({ task }) => {
   const { id, title, taskContents } = task;
