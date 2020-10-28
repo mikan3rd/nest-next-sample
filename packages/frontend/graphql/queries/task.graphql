@@ -1,8 +1,15 @@
 query tasks {
-  tasks {
+	tasks {
     id
     title
-    updatedAt
     createdAt
+    updatedAt
+    taskContents {
+      id
+      checked
+      title
+      createdAt
+      updatedAt
+    }
   }
 }

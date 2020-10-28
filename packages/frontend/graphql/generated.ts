@@ -10,31 +10,46 @@ export type Scalars = {
   Int: number;
   Float: number;
   /** Date custom scalar type */
-  Date: any;
+  Date: number;
+};
+
+export type TaskContentModel = {
+  id: Scalars["ID"];
+  checked: Scalars["Boolean"];
+  title: Scalars["String"];
+  createdAt: Scalars["Date"];
+  updatedAt: Scalars["Date"];
+  task: TaskModel;
 };
 
 export type TaskModel = {
-  __typename?: "TaskModel";
   id: Scalars["ID"];
   title: Scalars["String"];
   createdAt: Scalars["Date"];
   updatedAt: Scalars["Date"];
+  taskContents: Array<TaskContentModel>;
 };
 
 export type Query = {
-  __typename?: "Query";
   task?: Maybe<TaskModel>;
   tasks: Array<TaskModel>;
+  taskContent?: Maybe<TaskContentModel>;
+  taskContents: Array<TaskContentModel>;
 };
 
 export type QueryTaskArgs = {
   id: Scalars["ID"];
 };
 
+export type QueryTaskContentArgs = {
+  id: Scalars["ID"];
+};
+
 export type Mutation = {
-  __typename?: "Mutation";
   saveTask: TaskModel;
   deleteTask?: Maybe<TaskModel>;
+  saveTaskContent: TaskContentModel;
+  deleteTaskContent?: Maybe<TaskContentModel>;
 };
 
 export type MutationSaveTaskArgs = {
@@ -45,23 +60,40 @@ export type MutationDeleteTaskArgs = {
   id: Scalars["ID"];
 };
 
+export type MutationSaveTaskContentArgs = {
+  taskContent: TaskContentDto;
+};
+
+export type MutationDeleteTaskContentArgs = {
+  id: Scalars["ID"];
+};
+
 export type TaskDto = {
   id?: Maybe<Scalars["Float"]>;
   title: Scalars["String"];
+};
+
+export type TaskContentDto = {
+  id?: Maybe<Scalars["Float"]>;
+  checked?: Maybe<Scalars["Boolean"]>;
+  title: Scalars["String"];
+  taskId: Scalars["Float"];
 };
 
 export type DeleteTaskMutationVariables = Exact<{
   id: Scalars["ID"];
 }>;
 
-export type DeleteTaskMutation = { __typename?: "Mutation" } & {
-  deleteTask?: Maybe<{ __typename?: "TaskModel" } & Pick<TaskModel, "id" | "title" | "updatedAt" | "createdAt">>;
-};
+export type DeleteTaskMutation = { deleteTask?: Maybe<Pick<TaskModel, "id" | "title" | "updatedAt" | "createdAt">> };
 
 export type TasksQueryVariables = Exact<{ [key: string]: never }>;
 
-export type TasksQuery = { __typename?: "Query" } & {
-  tasks: Array<{ __typename?: "TaskModel" } & Pick<TaskModel, "id" | "title" | "updatedAt" | "createdAt">>;
+export type TasksQuery = {
+  tasks: Array<
+    Pick<TaskModel, "id" | "title" | "createdAt" | "updatedAt"> & {
+      taskContents: Array<Pick<TaskContentModel, "id" | "checked" | "title" | "createdAt" | "updatedAt">>;
+    }
+  >;
 };
 
 export const DeleteTaskDocument = gql`
@@ -106,8 +138,15 @@ export const TasksDocument = gql`
     tasks {
       id
       title
-      updatedAt
       createdAt
+      updatedAt
+      taskContents {
+        id
+        checked
+        title
+        createdAt
+        updatedAt
+      }
     }
   }
 `;
