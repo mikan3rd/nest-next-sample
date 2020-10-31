@@ -125,6 +125,7 @@ export const Task = React.memo<{
                 value={tmpTitle}
                 action={{
                   content: "保存",
+                  disabled: !tmpTitle,
                   onClick: (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
                     e.preventDefault();
                     handleAddTaskContent();
