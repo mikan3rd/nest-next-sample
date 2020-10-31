@@ -12,7 +12,7 @@ import { TasksDocument, TasksQuery, TasksQueryVariables, useTasksQuery } from ".
 type Props = { initialData: TasksQuery };
 
 export default React.memo<Props>(({ initialData }) => {
-  const { data } = useTasksQuery();
+  const { data, refetch } = useTasksQuery();
   const tasksData = data ? data.tasks : initialData.tasks;
 
   return (
@@ -35,8 +35,9 @@ export default React.memo<Props>(({ initialData }) => {
             margin-top: 32px;
           `}
         >
-          {tasksData.map((task) => {
-            return <Task key={task.id} task={task} />;
+          {tasksData.map((taskData) => {
+            const { taskContents, ...task } = taskData;
+            return <Task key={task.id} task={task} taskContents={taskContents} refetchTasks={refetch} />;
           })}
         </div>
       </Container>

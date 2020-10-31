@@ -1,0 +1,11 @@
+mutation addTaskContent($taskContent: TaskContentDTO!) {
+  saveTaskContent(taskContent: $taskContent) {
+    id
+    title
+    checked
+    task {
+      id
+      title
+    }
+  }
+}

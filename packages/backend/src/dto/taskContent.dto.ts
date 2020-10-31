@@ -1,8 +1,8 @@
-import { Field, InputType } from "@nestjs/graphql";
+import { Field, ID, InputType } from "@nestjs/graphql";
 
 @InputType()
 export class TaskContentDTO {
-  @Field({ nullable: true })
+  @Field((type) => ID, { nullable: true })
   id?: number;
 
   @Field({ nullable: true })
@@ -11,6 +11,6 @@ export class TaskContentDTO {
   @Field()
   title?: string;
 
-  @Field()
+  @Field((type) => ID, { nullable: true })
   taskId?: number;
 }

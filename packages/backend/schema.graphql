@@ -37,13 +37,13 @@ type Mutation {
 }
 
 input TaskDTO {
-  id: Float
+  id: ID
   title: String!
 }
 
 input TaskContentDTO {
-  id: Float
+  id: ID
   checked: Boolean
   title: String!
-  taskId: Float!
+  taskId: ID
 }
