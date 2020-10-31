@@ -32,8 +32,10 @@ const reducer: React.Reducer<State, Action> = (state, action) => {
   }
 };
 
+export type TaskType = Omit<TaskModel, "taskContents">;
+
 export const Task = React.memo<{
-  task: Omit<TaskModel, "taskContents">;
+  task: TaskType;
   taskContents: TaskContentType[];
   refetchTasks: () => Promise<unknown>;
 }>(({ task, taskContents, refetchTasks }) => {
@@ -51,8 +53,21 @@ export const Task = React.memo<{
   };
 
   return (
-    <div key={id}>
-      <Header as="h2" inverted>
+    <div
+      key={id}
+      css={css`
+        margin-top: 32px;
+      `}
+    >
+      <Header
+        as="h2"
+        inverted
+        css={css`
+          &&& {
+            margin: 0;
+          }
+        `}
+      >
         {title}
       </Header>
       <div

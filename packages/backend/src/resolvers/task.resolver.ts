@@ -1,7 +1,7 @@
 import { Inject } from "@nestjs/common";
 import { Args, ID, Mutation, Query, Resolver } from "@nestjs/graphql";
 
-import { TaskDTO } from "../dto/task.dto";
+import { AddTaskInput } from "../dto/task.dto";
 import { TaskModel } from "../models/task.model";
 import { TaskService } from "../services/task.service";
 
@@ -20,7 +20,7 @@ export class TaskResolver {
   }
 
   @Mutation((returns) => TaskModel)
-  async saveTask(@Args("task") task: TaskDTO) {
+  async saveTask(@Args("task") task: AddTaskInput) {
     return await this.taskService.save(task);
   }
 

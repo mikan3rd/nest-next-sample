@@ -5,7 +5,7 @@ import { GetServerSideProps, GetServerSidePropsResult } from "next";
 import Head from "next/head";
 import { Container, Header } from "semantic-ui-react";
 
-import { Task } from "../components/Task";
+import { TaskList } from "../components/TaskList";
 import { client } from "../graphql/client";
 import { TasksDocument, TasksQuery, TasksQueryVariables, useTasksQuery } from "../graphql/generated";
 
@@ -30,16 +30,7 @@ export default React.memo<Props>(({ initialData }) => {
         <Header as="h1" inverted>
           Nest Next TODO Sample
         </Header>
-        <div
-          css={css`
-            margin-top: 32px;
-          `}
-        >
-          {tasksData.map((taskData) => {
-            const { taskContents, ...task } = taskData;
-            return <Task key={task.id} task={task} taskContents={taskContents} refetchTasks={refetch} />;
-          })}
-        </div>
+        <TaskList tasksData={tasksData} refetchTasks={refetch} />
       </Container>
     </div>
   );

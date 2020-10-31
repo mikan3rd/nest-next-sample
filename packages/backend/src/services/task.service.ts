@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
-import { TaskDTO } from "../dto/task.dto";
+import { AddTaskInput } from "../dto/task.dto";
 import { TaskModel } from "../models/task.model";
 
 @Injectable()
@@ -20,7 +20,7 @@ export class TaskService {
     return this.taskRepository.find({ relations: ["taskContents"] });
   }
 
-  async save(payload: TaskDTO) {
+  async save(payload: AddTaskInput) {
     return this.taskRepository.save({ ...payload });
   }
 

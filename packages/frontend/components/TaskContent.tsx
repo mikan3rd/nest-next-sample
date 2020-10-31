@@ -35,7 +35,7 @@ export const TaskContent = React.memo<{
         justify-content: space-between;
         border: 1px solid white;
         border-radius: 4px;
-        padding: 4px;
+        padding: 4px 4px 4px 12px;
         margin-top: 8px;
       `}
     >

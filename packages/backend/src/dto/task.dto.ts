@@ -1,10 +1,7 @@
 import { Field, ID, InputType } from "@nestjs/graphql";
 
 @InputType()
-export class TaskDTO {
-  @Field((type) => ID, { nullable: true })
-  id?: number;
-
+export class AddTaskInput {
   @Field()
   title: string;
 }
