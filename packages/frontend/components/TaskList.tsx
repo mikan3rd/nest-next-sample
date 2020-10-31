@@ -1,6 +1,5 @@
 import React from "react";
 
-import { css } from "@emotion/core";
 import { Button } from "semantic-ui-react";
 
 import { AddTaskModal } from "./AddTaskModal";

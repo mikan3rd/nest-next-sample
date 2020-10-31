@@ -4,7 +4,7 @@ import { css } from "@emotion/core";
 import { Button, Header, Icon, Input } from "semantic-ui-react";
 
 import { TaskContent, TaskContentType } from "../components/TaskContent";
-import { TaskModel, useAddTaskContentMutation } from "../graphql/generated";
+import { TaskModel, useAddTaskContentMutation, useDeleteTaskMutation } from "../graphql/generated";
 
 type State = {
   isActive: boolean;
@@ -43,6 +43,7 @@ export const Task = React.memo<{
     isActive: false,
     tmpTitle: "",
   });
+  const [deleteTask] = useDeleteTaskMutation();
   const [saveTaskContent] = useAddTaskContentMutation();
   const { id, title } = task;
 
@@ -52,6 +53,11 @@ export const Task = React.memo<{
     dispatch({ type: "initialize" });
   };
 
+  const handleDeleteTask = async () => {
+    await deleteTask({ variables: { id } });
+    await refetchTasks();
+  };
+
   return (
     <div
       key={id}
@@ -59,17 +65,25 @@ export const Task = React.memo<{
         margin-top: 32px;
       `}
     >
-      <Header
-        as="h2"
-        inverted
+      <div
         css={css`
-          &&& {
-            margin: 0;
-          }
+          display: flex;
+          justify-content: space-between;
         `}
       >
-        {title}
-      </Header>
+        <Header
+          as="h2"
+          inverted
+          css={css`
+            &&& {
+              margin: 0;
+            }
+          `}
+        >
+          {title}
+        </Header>
+        <Button inverted icon="trash alternate" onClick={handleDeleteTask} />
+      </div>
       <div
         css={css`
           margin-left: 16px;

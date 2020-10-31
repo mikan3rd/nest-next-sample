@@ -1,7 +1,7 @@
 import React from "react";
 
 import { css } from "@emotion/core";
-import { Button, Checkbox } from "semantic-ui-react";
+import { Button, Checkbox, Popup } from "semantic-ui-react";
 
 import { TaskContentModel, useDeleteTaskContentMutation, useUpdateTaskContentMutation } from "../graphql/generated";
 
@@ -57,7 +57,9 @@ export const TaskContent = React.memo<{
           </label>
         }
       />
-      <Button icon="trash alternate" inverted onClick={handleDelete} />
+      <Popup position="bottom right" trigger={<Button inverted icon="ellipsis horizontal" />}>
+        <Button content="削除" onClick={handleDelete} css={css``} />
+      </Popup>
     </div>
   );
 });
