@@ -34,8 +34,7 @@ export class TaskContentService {
   }
 
   async delete(id: number) {
-    const target = await this.findOne(id);
     await this.taskContentRepository.delete(id);
-    return target;
+    return this.findOne(id);
   }
 }

@@ -9,3 +9,9 @@ mutation updateTaskContent($taskContent: UpdateTaskContentInput!) {
     id
   }
 }
+
+mutation deleteTaskContent($id: ID!) {
+  deleteTaskContent(id: $id) {
+    id
+  }
+}

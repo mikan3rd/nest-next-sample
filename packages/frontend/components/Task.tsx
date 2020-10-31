@@ -83,6 +83,8 @@ export const Task = React.memo<{
               display: flex;
               align-items: center;
               margin-top: 8px;
+              width: 100%;
+              padding: 4px;
             `}
           >
             <Input
@@ -92,9 +94,15 @@ export const Task = React.memo<{
                 onClick: handleAddTaskContent,
               }}
               onChange={(e, d) => dispatch({ type: "setTmpTitle", payload: d.value })}
+              css={css`
+                &&& {
+                  width: 100%;
+                }
+              `}
             />
             <Button
-              icon="delete"
+              inverted
+              icon="close"
               onClick={() => dispatch({ type: "setIsActive", payload: false })}
               css={css`
                 &&& {

@@ -1,9 +1,9 @@
 import React from "react";
 
 import { css } from "@emotion/core";
-import { Checkbox } from "semantic-ui-react";
+import { Button, Checkbox } from "semantic-ui-react";
 
-import { TaskContentModel, useUpdateTaskContentMutation } from "../graphql/generated";
+import { TaskContentModel, useDeleteTaskContentMutation, useUpdateTaskContentMutation } from "../graphql/generated";
 
 export type TaskContentType = Omit<TaskContentModel, "task">;
 
@@ -12,11 +12,17 @@ export const TaskContent = React.memo<{
   refetchTasks: () => Promise<unknown>;
 }>(({ taskContent, refetchTasks }) => {
   const [updateTaskContent] = useUpdateTaskContentMutation();
+  const [deleteTaskContent] = useDeleteTaskContentMutation();
 
   const { id, title, checked } = taskContent;
 
   const handleChangeChecked = async (checked: boolean) => {
     await updateTaskContent({ variables: { taskContent: { id, checked } } });
+    await refetchTasks();
+  };
+
+  const handleDelete = async () => {
+    await deleteTaskContent({ variables: { id } });
     await refetchTasks();
   };
 
@@ -26,6 +32,10 @@ export const TaskContent = React.memo<{
       css={css`
         display: flex;
         align-items: center;
+        justify-content: space-between;
+        border: 1px solid white;
+        border-radius: 4px;
+        padding: 4px;
         margin-top: 8px;
       `}
     >
@@ -47,6 +57,7 @@ export const TaskContent = React.memo<{
           </label>
         }
       />
+      <Button icon="trash alternate" inverted onClick={handleDelete} />
     </div>
   );
 });
