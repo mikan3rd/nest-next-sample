@@ -1,0 +1,17 @@
+mutation addTaskContent($taskContent: AddTaskContentInput!) {
+  saveTaskContent(taskContent: $taskContent) {
+    id
+  }
+}
+
+mutation updateTaskContent($taskContent: UpdateTaskContentInput!) {
+  updateTaskContent(taskContent: $taskContent) {
+    id
+  }
+}
+
+mutation deleteTaskContent($id: ID!) {
+  deleteTaskContent(id: $id) {
+    id
+  }
+}

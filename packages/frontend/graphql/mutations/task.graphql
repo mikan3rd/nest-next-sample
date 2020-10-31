@@ -1,8 +1,11 @@
+mutation addTask($task: AddTaskInput!) {
+  saveTask(task: $task) {
+    id
+  }
+}
+
 mutation deleteTask($id: ID!) {
   deleteTask(id: $id) {
     id
-    title
-    updatedAt
-    createdAt
   }
 }

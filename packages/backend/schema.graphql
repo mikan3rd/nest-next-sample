@@ -2,27 +2,52 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type TaskModel {
+type TaskContentModel {
   id: ID!
+  checked: Boolean!
   title: String!
   createdAt: Date!
   updatedAt: Date!
+  task: TaskModel!
 }
 
 """Date custom scalar type"""
 scalar Date
 
+type TaskModel {
+  id: ID!
+  title: String!
+  createdAt: Date!
+  updatedAt: Date!
+  taskContents: [TaskContentModel!]!
+}
+
 type Query {
   task(id: ID!): TaskModel
   tasks: [TaskModel!]!
+  taskContent(id: ID!): TaskContentModel
+  taskContents: [TaskContentModel!]!
 }
 
 type Mutation {
-  saveTask(task: TaskDTO!): TaskModel!
+  saveTask(task: AddTaskInput!): TaskModel!
   deleteTask(id: ID!): TaskModel
+  saveTaskContent(taskContent: AddTaskContentInput!): TaskContentModel!
+  updateTaskContent(taskContent: UpdateTaskContentInput!): TaskContentModel!
+  deleteTaskContent(id: ID!): TaskContentModel
 }
 
-input TaskDTO {
-  id: Float
+input AddTaskInput {
   title: String!
+}
+
+input AddTaskContentInput {
+  title: String!
+  taskId: ID!
+}
+
+input UpdateTaskContentInput {
+  id: ID!
+  checked: Boolean
+  title: String
 }
