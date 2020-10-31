@@ -9,7 +9,6 @@ import { TaskModel, useAddTaskContentMutation } from "../graphql/generated";
 type State = {
   isActive: boolean;
   tmpTitle: string;
-  tmpChecked: boolean;
 };
 
 type Action =
@@ -38,16 +37,15 @@ export const Task = React.memo<{
   taskContents: TaskContentType[];
   refetchTasks: () => Promise<unknown>;
 }>(({ task, taskContents, refetchTasks }) => {
-  const [{ isActive, tmpTitle, tmpChecked }, dispatch] = React.useReducer(reducer, {
+  const [{ isActive, tmpTitle }, dispatch] = React.useReducer(reducer, {
     isActive: false,
     tmpTitle: "",
-    tmpChecked: false,
   });
-  const [addTaskContent] = useAddTaskContentMutation();
+  const [saveTaskContent] = useAddTaskContentMutation();
   const { id, title } = task;
 
   const handleAddTaskContent = async () => {
-    await addTaskContent({ variables: { taskContent: { title: tmpTitle, checked: tmpChecked, taskId: id } } });
+    await saveTaskContent({ variables: { taskContent: { title: tmpTitle, taskId: id } } });
     await refetchTasks();
     dispatch({ type: "initialize" });
   };
@@ -63,7 +61,7 @@ export const Task = React.memo<{
         `}
       >
         {taskContents.map((taskContent) => {
-          return <TaskContent key={taskContent.id} taskContent={taskContent} />;
+          return <TaskContent key={taskContent.id} taskContent={taskContent} refetchTasks={refetchTasks} />;
         })}
         {!isActive && (
           <Button

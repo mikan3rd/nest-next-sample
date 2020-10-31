@@ -32,7 +32,8 @@ type Query {
 type Mutation {
   saveTask(task: TaskDTO!): TaskModel!
   deleteTask(id: ID!): TaskModel
-  saveTaskContent(taskContent: TaskContentDTO!): TaskContentModel!
+  saveTaskContent(taskContent: AddTaskContentInput!): TaskContentModel!
+  updateTaskContent(taskContent: UpdateTaskContentInput!): TaskContentModel!
   deleteTaskContent(id: ID!): TaskContentModel
 }
 
@@ -41,9 +42,13 @@ input TaskDTO {
   title: String!
 }
 
-input TaskContentDTO {
-  id: ID
-  checked: Boolean
+input AddTaskContentInput {
   title: String!
-  taskId: ID
+  taskId: ID!
+}
+
+input UpdateTaskContentInput {
+  id: ID!
+  checked: Boolean
+  title: String
 }

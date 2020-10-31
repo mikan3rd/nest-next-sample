@@ -1,7 +1,7 @@
 import { Inject } from "@nestjs/common";
 import { Args, ID, Mutation, Query, Resolver } from "@nestjs/graphql";
 
-import { TaskContentDTO } from "../dto/taskContent.dto";
+import { AddTaskContentInput, UpdateTaskContentInput } from "../dto/taskContent.dto";
 import { TaskContentModel } from "../models/taskContent.model";
 import { TaskContentService } from "../services/taskContent.service";
 
@@ -20,8 +20,13 @@ export class TaskContentResolver {
   }
 
   @Mutation((returns) => TaskContentModel)
-  async saveTaskContent(@Args("taskContent") taskContent: TaskContentDTO) {
+  async saveTaskContent(@Args("taskContent") taskContent: AddTaskContentInput) {
     return await this.taskContentService.save(taskContent);
+  }
+
+  @Mutation((returns) => TaskContentModel)
+  async updateTaskContent(@Args("taskContent") taskContent: UpdateTaskContentInput) {
+    return await this.taskContentService.update(taskContent);
   }
 
   @Mutation((returns) => TaskContentModel, { nullable: true })

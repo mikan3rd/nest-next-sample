@@ -11,7 +11,7 @@ export class TaskContentModel {
   id: number;
 
   @Field()
-  @Column()
+  @Column({ default: false })
   checked: boolean;
 
   @Field()
