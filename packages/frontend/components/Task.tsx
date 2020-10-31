@@ -116,19 +116,28 @@ export const Task = React.memo<{
               padding: 4px;
             `}
           >
-            <Input
-              value={tmpTitle}
-              action={{
-                content: "保存",
-                onClick: handleAddTaskContent,
-              }}
-              onChange={(e, d) => dispatch({ type: "setTmpTitle", payload: d.value })}
+            <form
               css={css`
-                &&& {
-                  width: 100%;
-                }
+                width: 100%;
               `}
-            />
+            >
+              <Input
+                value={tmpTitle}
+                action={{
+                  content: "保存",
+                  onClick: (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
+                    e.preventDefault();
+                    handleAddTaskContent();
+                  },
+                }}
+                onChange={(e, d) => dispatch({ type: "setTmpTitle", payload: d.value })}
+                css={css`
+                  &&& {
+                    width: 100%;
+                  }
+                `}
+              />
+            </form>
             <Button
               inverted
               icon="close"
