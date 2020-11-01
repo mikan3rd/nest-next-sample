@@ -5,28 +5,31 @@ import { Repository } from "typeorm";
 import { AddTaskInput } from "../dto/task.dto";
 import { TaskModel } from "../models/task.model";
 
+import { CategoryService } from "./category.service";
+
 @Injectable()
 export class TaskService {
   constructor(
     @InjectRepository(TaskModel)
     private taskRepository: Repository<TaskModel>,
+    private categoryService: CategoryService,
   ) {}
 
   async findOne(id: number) {
-    return this.taskRepository.findOne(id, { relations: ["taskContents"] });
+    return this.taskRepository.findOne(id, { relations: ["taskContents", "categories"] });
   }
 
   async findAll() {
-    return this.taskRepository.find({ relations: ["taskContents"] });
+    return this.taskRepository.find({ relations: ["taskContents", "categories"] });
   }
 
-  async save(payload: AddTaskInput) {
-    return this.taskRepository.save({ ...payload });
+  async save({ categoryIds, ...payload }: AddTaskInput) {
+    const categories = await this.categoryService.findByIds(categoryIds);
+    return await this.taskRepository.save({ ...payload, categories });
   }
 
   async delete(id: number) {
-    const target = await this.findOne(id);
     await this.taskRepository.delete(id);
-    return target;
+    return await this.findOne(id);
   }
 }
