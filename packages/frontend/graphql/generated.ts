@@ -28,13 +28,35 @@ export type TaskModel = {
   createdAt: Scalars["Date"];
   updatedAt: Scalars["Date"];
   taskContents: Array<TaskContentModel>;
+  categories: Array<CategoryModel>;
 };
 
+export type CategoryModel = {
+  id: Scalars["ID"];
+  name: Scalars["String"];
+  color: Color;
+  createdAt: Scalars["Date"];
+  updatedAt: Scalars["Date"];
+  tasks: TaskModel;
+};
+
+export enum Color {
+  Red = "RED",
+  Blue = "BLUE",
+  Green = "GREEN",
+}
+
 export type Query = {
+  category?: Maybe<CategoryModel>;
+  categories: Array<CategoryModel>;
   task?: Maybe<TaskModel>;
   tasks: Array<TaskModel>;
   taskContent?: Maybe<TaskContentModel>;
   taskContents: Array<TaskContentModel>;
+};
+
+export type QueryCategoryArgs = {
+  id: Scalars["ID"];
 };
 
 export type QueryTaskArgs = {
@@ -46,11 +68,21 @@ export type QueryTaskContentArgs = {
 };
 
 export type Mutation = {
+  saveCategory: CategoryModel;
+  deleteCategory?: Maybe<CategoryModel>;
   saveTask: TaskModel;
   deleteTask?: Maybe<TaskModel>;
   saveTaskContent: TaskContentModel;
   updateTaskContent: TaskContentModel;
   deleteTaskContent?: Maybe<TaskContentModel>;
+};
+
+export type MutationSaveCategoryArgs = {
+  category: AddCategoryInput;
+};
+
+export type MutationDeleteCategoryArgs = {
+  id: Scalars["ID"];
 };
 
 export type MutationSaveTaskArgs = {
@@ -73,8 +105,14 @@ export type MutationDeleteTaskContentArgs = {
   id: Scalars["ID"];
 };
 
+export type AddCategoryInput = {
+  name: Scalars["String"];
+  color: Scalars["String"];
+};
+
 export type AddTaskInput = {
   title: Scalars["String"];
+  categoryIds: Array<Scalars["ID"]>;
 };
 
 export type AddTaskContentInput = {
@@ -118,12 +156,19 @@ export type DeleteTaskContentMutationVariables = Exact<{
 
 export type DeleteTaskContentMutation = { deleteTaskContent?: Maybe<Pick<TaskContentModel, "id">> };
 
+export type CategoriesQueryVariables = Exact<{ [key: string]: never }>;
+
+export type CategoriesQuery = {
+  categories: Array<Pick<CategoryModel, "id" | "name" | "color" | "createdAt" | "updatedAt">>;
+};
+
 export type TasksQueryVariables = Exact<{ [key: string]: never }>;
 
 export type TasksQuery = {
   tasks: Array<
     Pick<TaskModel, "id" | "title" | "createdAt" | "updatedAt"> & {
       taskContents: Array<Pick<TaskContentModel, "id" | "checked" | "title" | "createdAt" | "updatedAt">>;
+      categories: Array<Pick<CategoryModel, "id" | "name" | "color">>;
     }
   >;
 };
@@ -322,6 +367,44 @@ export type DeleteTaskContentMutationOptions = Apollo.BaseMutationOptions<
   DeleteTaskContentMutation,
   DeleteTaskContentMutationVariables
 >;
+export const CategoriesDocument = gql`
+  query categories {
+    categories {
+      id
+      name
+      color
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
+/**
+ * __useCategoriesQuery__
+ *
+ * To run a query within a React component, call `useCategoriesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCategoriesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCategoriesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useCategoriesQuery(baseOptions?: Apollo.QueryHookOptions<CategoriesQuery, CategoriesQueryVariables>) {
+  return Apollo.useQuery<CategoriesQuery, CategoriesQueryVariables>(CategoriesDocument, baseOptions);
+}
+export function useCategoriesLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<CategoriesQuery, CategoriesQueryVariables>,
+) {
+  return Apollo.useLazyQuery<CategoriesQuery, CategoriesQueryVariables>(CategoriesDocument, baseOptions);
+}
+export type CategoriesQueryHookResult = ReturnType<typeof useCategoriesQuery>;
+export type CategoriesLazyQueryHookResult = ReturnType<typeof useCategoriesLazyQuery>;
+export type CategoriesQueryResult = Apollo.QueryResult<CategoriesQuery, CategoriesQueryVariables>;
 export const TasksDocument = gql`
   query tasks {
     tasks {
@@ -335,6 +418,11 @@ export const TasksDocument = gql`
         title
         createdAt
         updatedAt
+      }
+      categories {
+        id
+        name
+        color
       }
     }
   }

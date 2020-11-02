@@ -1,10 +1,10 @@
 import React from "react";
 
 import { css } from "@emotion/core";
-import { Button, Header, Icon, Input } from "semantic-ui-react";
+import { Button, Header, Icon, Input, Label } from "semantic-ui-react";
 
 import { TaskContent, TaskContentType } from "../components/TaskContent";
-import { TaskModel, useAddTaskContentMutation, useDeleteTaskMutation } from "../graphql/generated";
+import { Color, useAddTaskContentMutation, useDeleteTaskMutation } from "../graphql/generated";
 
 type State = {
   isActive: boolean;
@@ -32,7 +32,17 @@ const reducer: React.Reducer<State, Action> = (state, action) => {
   }
 };
 
-export type TaskType = Omit<TaskModel, "taskContents">;
+export type TaskType = {
+  id: string;
+  title: string;
+  createdAt: number;
+  updatedAt: number;
+  categories: {
+    id: string;
+    name: string;
+    color: Color;
+  }[];
+};
 
 export const Task = React.memo<{
   task: TaskType;
@@ -45,7 +55,7 @@ export const Task = React.memo<{
   });
   const [deleteTask] = useDeleteTaskMutation();
   const [saveTaskContent] = useAddTaskContentMutation();
-  const { id, title } = task;
+  const { id, title, categories } = task;
 
   const handleAddTaskContent = async () => {
     await saveTaskContent({ variables: { taskContent: { title: tmpTitle, taskId: id } } });
@@ -69,19 +79,44 @@ export const Task = React.memo<{
         css={css`
           display: flex;
           justify-content: space-between;
+          align-items: flex-start;
         `}
       >
-        <Header
-          as="h2"
-          inverted
-          css={css`
-            &&& {
-              margin: 0;
-            }
-          `}
-        >
-          {title}
-        </Header>
+        <div>
+          <Header
+            as="h2"
+            inverted
+            css={css`
+              &&& {
+                margin: 0;
+              }
+            `}
+          >
+            {title}
+          </Header>
+          <div
+            css={css`
+              display: flex;
+              margin-top: 4px;
+            `}
+          >
+            {categories.map((category) => {
+              return (
+                <Label
+                  key={category.id}
+                  content={category.name}
+                  tag
+                  css={css`
+                    &&& {
+                      color: white;
+                      background-color: ${category.color};
+                    }
+                  `}
+                />
+              );
+            })}
+          </div>
+        </div>
         <Button inverted icon="trash alternate" onClick={handleDeleteTask} />
       </div>
       <div

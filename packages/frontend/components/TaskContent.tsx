@@ -3,9 +3,15 @@ import React from "react";
 import { css } from "@emotion/core";
 import { Button, Checkbox, Popup } from "semantic-ui-react";
 
-import { TaskContentModel, useDeleteTaskContentMutation, useUpdateTaskContentMutation } from "../graphql/generated";
+import { useDeleteTaskContentMutation, useUpdateTaskContentMutation } from "../graphql/generated";
 
-export type TaskContentType = Omit<TaskContentModel, "task">;
+export type TaskContentType = {
+  id: string;
+  checked: boolean;
+  title: string;
+  createdAt: number;
+  updatedAt: number;
+};
 
 export const TaskContent = React.memo<{
   taskContent: TaskContentType;

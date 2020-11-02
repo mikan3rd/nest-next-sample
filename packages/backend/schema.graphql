@@ -26,10 +26,16 @@ type TaskModel {
 type CategoryModel {
   id: ID!
   name: String!
-  color: String!
+  color: Color!
   createdAt: Date!
   updatedAt: Date!
   tasks: TaskModel!
+}
+
+enum Color {
+  RED
+  BLUE
+  GREEN
 }
 
 type Query {

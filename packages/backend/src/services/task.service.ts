@@ -20,7 +20,7 @@ export class TaskService {
   }
 
   async findAll() {
-    return this.taskRepository.find({ relations: ["taskContents", "categories"] });
+    return this.taskRepository.find({ order: { createdAt: "ASC" }, relations: ["taskContents", "categories"] });
   }
 
   async save({ categoryIds, ...payload }: AddTaskInput) {
