@@ -110,6 +110,7 @@ export const Task = React.memo<{
                     &&& {
                       color: white;
                       background-color: ${category.color};
+                      margin-right: 12px;
                     }
                   `}
                 />
@@ -130,6 +131,7 @@ export const Task = React.memo<{
         {!isActive && (
           <Button
             inverted
+            basic
             onClick={() => dispatch({ type: "setIsActive", payload: true })}
             css={css`
               &&& {

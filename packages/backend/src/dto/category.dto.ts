@@ -7,7 +7,7 @@ export class AddCategoryInput {
   @Field()
   name: string;
 
-  @Field()
+  @Field((type) => Color)
   color: Color;
 }
 
@@ -19,6 +19,6 @@ export class UpdateCategoryInput {
   @Field()
   name?: string;
 
-  @Field()
+  @Field((type) => Color)
   color?: Color;
 }

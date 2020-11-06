@@ -107,6 +107,7 @@ export const AddTaskModal = React.memo<{
       </Modal.Content>
       <Modal.Actions>
         <Button content="作成" disabled={!title} onClick={handleAddTask} />
+        <Button content="キャンセル" onClick={() => setOpen(false)} />
       </Modal.Actions>
     </Modal>
   );

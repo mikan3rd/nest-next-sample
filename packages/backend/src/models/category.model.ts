@@ -4,9 +4,9 @@ import { Column, CreateDateColumn, Entity, ManyToMany, PrimaryGeneratedColumn, U
 import { TaskModel } from "./task.model";
 
 export enum Color {
-  RED = "red",
-  BLUE = "blue",
-  GREEN = "green",
+  red = "red",
+  blue = "blue",
+  green = "green",
 }
 
 registerEnumType(Color, { name: "Color" });

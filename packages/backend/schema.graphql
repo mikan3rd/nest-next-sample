@@ -33,9 +33,9 @@ type CategoryModel {
 }
 
 enum Color {
-  RED
-  BLUE
-  GREEN
+  red
+  blue
+  green
 }
 
 type Query {
@@ -59,7 +59,7 @@ type Mutation {
 
 input AddCategoryInput {
   name: String!
-  color: String!
+  color: Color!
 }
 
 input AddTaskInput {

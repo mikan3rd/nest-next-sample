@@ -41,9 +41,9 @@ export type CategoryModel = {
 };
 
 export enum Color {
-  Red = "RED",
-  Blue = "BLUE",
-  Green = "GREEN",
+  Red = "red",
+  Blue = "blue",
+  Green = "green",
 }
 
 export type Query = {
@@ -107,7 +107,7 @@ export type MutationDeleteTaskContentArgs = {
 
 export type AddCategoryInput = {
   name: Scalars["String"];
-  color: Scalars["String"];
+  color: Color;
 };
 
 export type AddTaskInput = {
@@ -125,6 +125,12 @@ export type UpdateTaskContentInput = {
   checked?: Maybe<Scalars["Boolean"]>;
   title?: Maybe<Scalars["String"]>;
 };
+
+export type AddCategoryMutationVariables = Exact<{
+  category: AddCategoryInput;
+}>;
+
+export type AddCategoryMutation = { saveCategory: Pick<CategoryModel, "id"> };
 
 export type AddTaskMutationVariables = Exact<{
   task: AddTaskInput;
@@ -173,6 +179,40 @@ export type TasksQuery = {
   >;
 };
 
+export const AddCategoryDocument = gql`
+  mutation addCategory($category: AddCategoryInput!) {
+    saveCategory(category: $category) {
+      id
+    }
+  }
+`;
+export type AddCategoryMutationFn = Apollo.MutationFunction<AddCategoryMutation, AddCategoryMutationVariables>;
+
+/**
+ * __useAddCategoryMutation__
+ *
+ * To run a mutation, you first call `useAddCategoryMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddCategoryMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addCategoryMutation, { data, loading, error }] = useAddCategoryMutation({
+ *   variables: {
+ *      category: // value for 'category'
+ *   },
+ * });
+ */
+export function useAddCategoryMutation(
+  baseOptions?: Apollo.MutationHookOptions<AddCategoryMutation, AddCategoryMutationVariables>,
+) {
+  return Apollo.useMutation<AddCategoryMutation, AddCategoryMutationVariables>(AddCategoryDocument, baseOptions);
+}
+export type AddCategoryMutationHookResult = ReturnType<typeof useAddCategoryMutation>;
+export type AddCategoryMutationResult = Apollo.MutationResult<AddCategoryMutation>;
+export type AddCategoryMutationOptions = Apollo.BaseMutationOptions<AddCategoryMutation, AddCategoryMutationVariables>;
 export const AddTaskDocument = gql`
   mutation addTask($task: AddTaskInput!) {
     saveTask(task: $task) {
