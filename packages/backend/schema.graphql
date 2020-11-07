@@ -20,9 +20,27 @@ type TaskModel {
   createdAt: Date!
   updatedAt: Date!
   taskContents: [TaskContentModel!]!
+  categories: [CategoryModel!]!
+}
+
+type CategoryModel {
+  id: ID!
+  name: String!
+  color: Color!
+  createdAt: Date!
+  updatedAt: Date!
+  tasks: TaskModel!
+}
+
+enum Color {
+  red
+  blue
+  green
 }
 
 type Query {
+  category(id: ID!): CategoryModel
+  categories: [CategoryModel!]!
   task(id: ID!): TaskModel
   tasks: [TaskModel!]!
   taskContent(id: ID!): TaskContentModel
@@ -30,6 +48,8 @@ type Query {
 }
 
 type Mutation {
+  saveCategory(category: AddCategoryInput!): CategoryModel!
+  deleteCategory(id: ID!): CategoryModel
   saveTask(task: AddTaskInput!): TaskModel!
   deleteTask(id: ID!): TaskModel
   saveTaskContent(taskContent: AddTaskContentInput!): TaskContentModel!
@@ -37,8 +57,14 @@ type Mutation {
   deleteTaskContent(id: ID!): TaskContentModel
 }
 
+input AddCategoryInput {
+  name: String!
+  color: Color!
+}
+
 input AddTaskInput {
   title: String!
+  categoryIds: [ID!]!
 }
 
 input AddTaskContentInput {

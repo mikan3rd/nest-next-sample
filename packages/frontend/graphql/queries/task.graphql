@@ -11,5 +11,10 @@ query tasks {
       createdAt
       updatedAt
     }
+    categories {
+      id
+      name
+      color
+    }
   }
 }
