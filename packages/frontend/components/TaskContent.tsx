@@ -39,32 +39,16 @@ export const TaskContent = React.memo<{
         display: flex;
         align-items: center;
         justify-content: space-between;
-        border: 1px solid white;
+        background-color: white;
+        border: 1px solid #d4d4d5;
         border-radius: 4px;
         padding: 4px 4px 4px 12px;
         margin-top: 8px;
       `}
     >
-      <Checkbox
-        checked={checked}
-        onChange={(e, d) => handleChangeChecked(d.checked)}
-        label={
-          <label
-            css={css`
-              &&& {
-                color: white;
-                :hover {
-                  color: white;
-                }
-              }
-            `}
-          >
-            {title}
-          </label>
-        }
-      />
-      <Popup position="bottom right" trigger={<Button inverted icon="ellipsis horizontal" />}>
-        <Button content="削除" onClick={handleDelete} css={css``} />
+      <Checkbox checked={checked} onChange={(e, d) => handleChangeChecked(d.checked)} label={<label>{title}</label>} />
+      <Popup position="bottom right" trigger={<Button icon="ellipsis horizontal" />}>
+        <Button content="削除" color="red" onClick={handleDelete} css={css``} />
       </Popup>
     </div>
   );

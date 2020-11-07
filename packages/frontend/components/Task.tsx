@@ -85,7 +85,6 @@ export const Task = React.memo<{
         <div>
           <Header
             as="h2"
-            inverted
             css={css`
               &&& {
                 margin: 0;
@@ -105,11 +104,10 @@ export const Task = React.memo<{
                 <Label
                   key={category.id}
                   content={category.name}
+                  color={category.color}
                   tag
                   css={css`
                     &&& {
-                      color: white;
-                      background-color: ${category.color};
                       margin-right: 12px;
                     }
                   `}
@@ -118,7 +116,7 @@ export const Task = React.memo<{
             })}
           </div>
         </div>
-        <Button inverted icon="trash alternate" onClick={handleDeleteTask} />
+        <Button icon="trash alternate" color="red" onClick={handleDeleteTask} />
       </div>
       <div
         css={css`
@@ -130,8 +128,8 @@ export const Task = React.memo<{
         })}
         {!isActive && (
           <Button
-            inverted
             basic
+            color="blue"
             onClick={() => dispatch({ type: "setIsActive", payload: true })}
             css={css`
               &&& {
@@ -177,7 +175,6 @@ export const Task = React.memo<{
               />
             </form>
             <Button
-              inverted
               icon="close"
               onClick={() => dispatch({ type: "setIsActive", payload: false })}
               css={css`

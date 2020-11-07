@@ -40,8 +40,8 @@ export const TaskList = React.memo<Props>(({ tasksData, refetchTasks }) => {
           justify-content: space-between;
         `}
       >
-        <Button inverted content="新規作成" onClick={() => setAddTaskModalOpen(true)} />
-        <Button inverted basic content="カテゴリ設定" onClick={() => setCategoryModalOpen(true)} />
+        <Button content="新規作成" color="blue" onClick={() => setAddTaskModalOpen(true)} />
+        <Button basic content="カテゴリ設定" color="blue" onClick={() => setCategoryModalOpen(true)} />
       </div>
       <div>
         {tasksData.map((taskData) => {

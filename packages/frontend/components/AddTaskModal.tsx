@@ -56,13 +56,7 @@ export const AddTaskModal = React.memo<{
       <Modal.Header>新規作成</Modal.Header>
       <Modal.Content>
         <div>
-          <div
-            css={css`
-              color: black;
-            `}
-          >
-            タイトル
-          </div>
+          <div>タイトル</div>
           <Input
             value={title}
             onChange={(e, d) => dispatch({ type: "setTitle", payload: d.value })}
@@ -79,13 +73,7 @@ export const AddTaskModal = React.memo<{
             margin-top: 8px;
           `}
         >
-          <div
-            css={css`
-              color: black;
-            `}
-          >
-            カテゴリ
-          </div>
+          <div>カテゴリ</div>
           <Dropdown
             options={categoryOptions}
             search
@@ -94,19 +82,11 @@ export const AddTaskModal = React.memo<{
             multiple
             value={categoryIds}
             onChange={(e, d) => dispatch({ type: "setCategoryIds", payload: d.value as string[] })}
-            css={css`
-              &&& {
-                span,
-                i::before {
-                  color: black;
-                }
-              }
-            `}
           />
         </div>
       </Modal.Content>
       <Modal.Actions>
-        <Button content="作成" disabled={!title} onClick={handleAddTask} />
+        <Button content="作成" color="blue" disabled={!title} onClick={handleAddTask} />
         <Button content="キャンセル" onClick={() => setOpen(false)} />
       </Modal.Actions>
     </Modal>

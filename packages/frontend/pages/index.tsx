@@ -27,9 +27,7 @@ export default React.memo<Props>(({ initialData }) => {
           min-height: 100vh;
         `}
       >
-        <Header as="h1" inverted>
-          Nest Next TODO Sample
-        </Header>
+        <Header as="h1">Nest Next TODO Sample</Header>
         <TaskList tasksData={tasksData} refetchTasks={refetch} />
       </Container>
     </div>

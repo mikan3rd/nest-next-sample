@@ -3,7 +3,7 @@ import React from "react";
 import { css } from "@emotion/core";
 import { Button, Dropdown, Input, Modal, Table } from "semantic-ui-react";
 
-import { Color, useAddCategoryMutation } from "../graphql/generated";
+import { Color, useAddCategoryMutation, useDeleteCategoryMutation } from "../graphql/generated";
 
 import { CategoryType } from "./TaskList";
 
@@ -41,6 +41,7 @@ export const CategoryModal = React.memo<{
   categories: CategoryType[];
 }>(({ open, setOpen, refetchCategories, categories }) => {
   const [addCategory] = useAddCategoryMutation();
+  const [deleteCategory] = useDeleteCategoryMutation();
 
   const [{ isEditing, title, color }, dispatch] = React.useReducer(reducer, {
     isEditing: false,
@@ -56,6 +57,11 @@ export const CategoryModal = React.memo<{
     await addCategory({ variables: { category: { name: title, color } } });
     await refetchCategories();
     dispatch({ type: "initialize" });
+  };
+
+  const handleDeleteCategory = async (id: string) => {
+    await deleteCategory({ variables: { id } });
+    await refetchCategories();
   };
 
   return (
@@ -85,21 +91,11 @@ export const CategoryModal = React.memo<{
               {categories.map(({ id, name, color }) => {
                 return (
                   <Table.Row key={id}>
-                    <Table.Cell
-                      css={css`
-                        color: black;
-                      `}
-                    >
-                      {name}
+                    <Table.Cell>{name}</Table.Cell>
+                    <Table.Cell>{color}</Table.Cell>
+                    <Table.Cell textAlign="right">
+                      <Button icon="trash alternate" color="red" onClick={() => handleDeleteCategory(id)} />
                     </Table.Cell>
-                    <Table.Cell
-                      css={css`
-                        color: black;
-                      `}
-                    >
-                      {color}
-                    </Table.Cell>
-                    <Table.Cell />
                   </Table.Row>
                 );
               })}
@@ -117,16 +113,13 @@ export const CategoryModal = React.memo<{
                       onChange={(e, d) => dispatch({ type: "setColor", payload: d.value as Color })}
                       css={css`
                         &&& {
-                          min-width: unset;
-                          * {
-                            color: black;
-                          }
+                          min-width: 100px;
                         }
                       `}
                     />
                   </Table.Cell>
                   <Table.Cell textAlign="right">
-                    <Button content="登録" disabled={!title} onClick={handleAddCategory} />
+                    <Button content="登録" color="blue" disabled={!title} onClick={handleAddCategory} />
                   </Table.Cell>
                 </Table.Row>
               ) : (
@@ -134,7 +127,11 @@ export const CategoryModal = React.memo<{
                   <Table.Cell />
                   <Table.Cell />
                   <Table.Cell textAlign="right">
-                    <Button content="追加" onClick={() => dispatch({ type: "setIsEditing", payload: true })} />
+                    <Button
+                      content="追加"
+                      color="blue"
+                      onClick={() => dispatch({ type: "setIsEditing", payload: true })}
+                    />
                   </Table.Cell>
                 </Table.Row>
               )}
