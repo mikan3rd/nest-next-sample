@@ -4,9 +4,6 @@ import { GraphQLModule } from "@nestjs/graphql";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
 import { AppController } from "../controllers/app.controller";
-import { CategoryModel } from "../models/category.model";
-import { TaskModel } from "../models/task.model";
-import { TaskContentModel } from "../models/taskContent.model";
 import { CategoryModule } from "../modules/category.module";
 import { TaskModule } from "../modules/task.module";
 import { TaskContentModule } from "../modules/taskContent.module";
@@ -36,7 +33,7 @@ type EnvironmentVariables = {
         username: configService.get("DB_USERNAME"),
         password: configService.get("DB_PASSWORD"),
         database: "nest_next_sample",
-        entities: [TaskModel, TaskContentModel, CategoryModel],
+        autoLoadEntities: true,
         synchronize: false,
       }),
     }),
