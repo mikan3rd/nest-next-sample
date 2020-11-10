@@ -15,6 +15,7 @@ type EnvironmentVariables = {
   DB_PORT: number;
   DB_USERNAME: string;
   DB_PASSWORD: string;
+  DB_NAME: string;
 };
 
 @Module({
@@ -32,7 +33,7 @@ type EnvironmentVariables = {
         port: configService.get("DB_PORT"),
         username: configService.get("DB_USERNAME"),
         password: configService.get("DB_PASSWORD"),
-        database: "nest_next_sample",
+        database: configService.get("DB_NAME"),
         autoLoadEntities: true,
         synchronize: false,
       }),
