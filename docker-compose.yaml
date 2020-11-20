@@ -1,0 +1,57 @@
+version: "3"
+
+x-dev-base: &dev-base
+  build: .
+  volumes:
+    - .:/app
+    - /app/node_modules
+    - /app/packages/backend/node_modules
+    - /app/packages/frontend/node_modules
+
+services:
+
+  mysql:
+    image: mysql:5.7
+    command: mysqld
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: nest_next_sample
+      MYSQL_USER: docker
+      MYSQL_PASSWORD: docker
+      TZ: 'Asia/Tokyo'
+    ports:
+      - 3306:3306
+    volumes:
+      - ./docker/db/data:/var/lib/mysql
+      - ./docker/db/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./docker/db/sql:/docker-entrypoint-initdb.d
+
+  backend:
+    << : *dev-base
+    working_dir: /app/packages/backend
+    command: yarn start:dev
+    tty: true
+    environment:
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_USERNAME: docker
+      DB_PASSWORD: docker
+      DB_NAME: nest_next_sample
+    depends_on:
+      - mysql
+    ports:
+      - "3300:3300"
+
+  frontend:
+    << : *dev-base
+    working_dir: /app/packages/frontend
+    command: yarn dev
+    tty: true
+    environment:
+      NEXT_PUBLIC_APOLLO_URI: http://backend:3300/graphql
+    depends_on:
+      - mysql
+      - backend
+    ports:
+      - "3000:3000"
+
