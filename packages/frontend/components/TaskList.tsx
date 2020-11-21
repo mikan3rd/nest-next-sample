@@ -5,8 +5,8 @@ import { Button } from "semantic-ui-react";
 
 import { AddTaskModal } from "@/components/AddTaskModal";
 import { CategoryModal } from "@/components/CategoryModal";
-import { Task, TaskType } from "@/components/Task";
 import { TaskContentType } from "@/components/TaskContent";
+import { TaskSection, TaskType } from "@/components/TaskSection";
 import { Color, useCategoriesQuery } from "@/graphql/generated";
 
 export type CategoryType = {
@@ -45,7 +45,7 @@ export const TaskList = memo<Props>(({ tasksData, refetchTasks }) => {
       <div>
         {tasksData.map((taskData) => {
           const { taskContents, ...task } = taskData;
-          return <Task key={task.id} task={task} taskContents={taskContents} refetchTasks={refetchTasks} />;
+          return <TaskSection key={task.id} task={task} taskContents={taskContents} refetchTasks={refetchTasks} />;
         })}
         <AddTaskModal
           open={addTaskModalOpen}

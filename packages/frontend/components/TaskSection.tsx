@@ -1,36 +1,11 @@
-import React, { memo, useReducer } from "react";
+import React, { memo } from "react";
 
 import { css } from "@emotion/core";
 import { Button, Header, Icon, Input, Label } from "semantic-ui-react";
 
 import { TaskContent, TaskContentType } from "@/components/TaskContent";
-import { Color, useAddTaskContentMutation, useDeleteTaskMutation } from "@/graphql/generated";
-
-type State = {
-  isActive: boolean;
-  tmpTitle: string;
-};
-
-type Action =
-  | { type: "initialize" }
-  | {
-      type: "setIsActive";
-      payload: boolean;
-    }
-  | { type: "setTmpTitle"; payload: string };
-
-const reducer: React.Reducer<State, Action> = (state, action) => {
-  switch (action.type) {
-    case "initialize":
-      return { ...state, isActive: false, tmpTitle: "", tmpChecked: false };
-    case "setIsActive":
-      return { ...state, isActive: action.payload };
-    case "setTmpTitle":
-      return { ...state, tmpTitle: action.payload };
-    default:
-      break;
-  }
-};
+import { Color } from "@/graphql/generated";
+import { useTaskSection } from "@/hooks/useTaskSection";
 
 export type TaskType = {
   id: string;
@@ -44,29 +19,17 @@ export type TaskType = {
   }[];
 };
 
-export const Task = memo<{
+export const TaskSection = memo<{
   task: TaskType;
   taskContents: TaskContentType[];
   refetchTasks: () => Promise<unknown>;
 }>(({ task, taskContents, refetchTasks }) => {
-  const [{ isActive, tmpTitle }, dispatch] = useReducer(reducer, {
-    isActive: false,
-    tmpTitle: "",
+  const { isActive, tmpTitle, dispatch, handleAddTaskContent, handleDeleteTask } = useTaskSection({
+    task,
+    refetchTasks,
   });
-  const [deleteTask] = useDeleteTaskMutation();
-  const [saveTaskContent] = useAddTaskContentMutation();
+
   const { id, title, categories } = task;
-
-  const handleAddTaskContent = async () => {
-    await saveTaskContent({ variables: { taskContent: { title: tmpTitle, taskId: id } } });
-    await refetchTasks();
-    dispatch({ type: "initialize" });
-  };
-
-  const handleDeleteTask = async () => {
-    await deleteTask({ variables: { id } });
-    await refetchTasks();
-  };
 
   return (
     <div
