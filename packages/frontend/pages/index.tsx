@@ -1,17 +1,22 @@
 import React from "react";
 
 import { css } from "@emotion/core";
-import { GetServerSideProps, GetServerSidePropsResult } from "next";
+import { InferGetServerSidePropsType } from "next";
 import Head from "next/head";
 import { Container, Header } from "semantic-ui-react";
 
-import { TaskList } from "../components/TaskList";
-import { client } from "../graphql/client";
-import { TasksDocument, TasksQuery, TasksQueryVariables, useTasksQuery } from "../graphql/generated";
+import { TaskList } from "@/components/TaskList";
+import { client } from "@/graphql/client";
+import { TasksDocument, TasksQuery, TasksQueryVariables, useTasksQuery } from "@/graphql/generated";
 
-type Props = { initialData: TasksQuery };
+export const getServerSideProps = async () => {
+  const { data } = await client.query<TasksQuery, TasksQueryVariables>({
+    query: TasksDocument,
+  });
+  return { props: { initialData: data } };
+};
 
-export default React.memo<Props>(({ initialData }) => {
+export default React.memo<InferGetServerSidePropsType<typeof getServerSideProps>>(({ initialData }) => {
   const { data, refetch } = useTasksQuery();
   const tasksData = data ? data.tasks : initialData.tasks;
 
@@ -33,11 +38,3 @@ export default React.memo<Props>(({ initialData }) => {
     </div>
   );
 });
-
-export const getServerSideProps: GetServerSideProps = async () => {
-  const { data } = await client.query<TasksQuery, TasksQueryVariables>({
-    query: TasksDocument,
-  });
-  const result: GetServerSidePropsResult<Props> = { props: { initialData: data } };
-  return result;
-};

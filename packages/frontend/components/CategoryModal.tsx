@@ -3,9 +3,8 @@ import React from "react";
 import { css } from "@emotion/core";
 import { Button, Dropdown, Input, Modal, Table } from "semantic-ui-react";
 
-import { Color, useAddCategoryMutation, useDeleteCategoryMutation } from "../graphql/generated";
-
-import { CategoryType } from "./TaskList";
+import { CategoryType } from "@/components/TaskList";
+import { Color, useAddCategoryMutation, useDeleteCategoryMutation } from "@/graphql/generated";
 
 type State = {
   isEditing: boolean;

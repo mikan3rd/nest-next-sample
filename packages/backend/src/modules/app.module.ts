@@ -3,12 +3,12 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { GraphQLModule } from "@nestjs/graphql";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
-import { AppController } from "../controllers/app.controller";
-import { CategoryModule } from "../modules/category.module";
-import { TaskModule } from "../modules/task.module";
-import { TaskContentModule } from "../modules/taskContent.module";
-import { DateScalar } from "../scalars/date.scalar";
-import { AppService } from "../services/app.service";
+import { AppController } from "@/controllers/app.controller";
+import { CategoryModule } from "@/modules/category.module";
+import { TaskModule } from "@/modules/task.module";
+import { TaskContentModule } from "@/modules/taskContent.module";
+import { DateScalar } from "@/scalars/date.scalar";
+import { AppService } from "@/services/app.service";
 
 type EnvironmentVariables = {
   DB_HOST: string;
