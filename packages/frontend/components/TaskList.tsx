@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo, useState } from "react";
 
 import { css } from "@emotion/core";
 import { Button } from "semantic-ui-react";
@@ -22,9 +22,9 @@ type Props = {
   refetchTasks: () => Promise<unknown>;
 };
 
-export const TaskList = React.memo<Props>(({ tasksData, refetchTasks }) => {
-  const [addTaskModalOpen, setAddTaskModalOpen] = React.useState(false);
-  const [categoryModalOpen, setCategoryModalOpen] = React.useState(false);
+export const TaskList = memo<Props>(({ tasksData, refetchTasks }) => {
+  const [addTaskModalOpen, setAddTaskModalOpen] = useState(false);
+  const [categoryModalOpen, setCategoryModalOpen] = useState(false);
   const { data, refetch: refetchCategories } = useCategoriesQuery();
 
   if (!data) {

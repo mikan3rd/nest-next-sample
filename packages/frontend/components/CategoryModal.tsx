@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo, useReducer } from "react";
 
 import { css } from "@emotion/core";
 import { Button, Dropdown, Input, Modal, Table } from "semantic-ui-react";
@@ -33,7 +33,7 @@ const reducer: React.Reducer<State, Action> = (state, action) => {
   }
 };
 
-export const CategoryModal = React.memo<{
+export const CategoryModal = memo<{
   open: boolean;
   setOpen: (open: boolean) => void;
   refetchCategories: () => Promise<unknown>;
@@ -42,7 +42,7 @@ export const CategoryModal = React.memo<{
   const [addCategory] = useAddCategoryMutation();
   const [deleteCategory] = useDeleteCategoryMutation();
 
-  const [{ isEditing, title, color }, dispatch] = React.useReducer(reducer, {
+  const [{ isEditing, title, color }, dispatch] = useReducer(reducer, {
     isEditing: false,
     title: "",
     color: Color.Red,

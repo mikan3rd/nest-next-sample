@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 
 import { css } from "@emotion/core";
 import { Button, Checkbox, Popup } from "semantic-ui-react";
@@ -13,7 +13,7 @@ export type TaskContentType = {
   updatedAt: number;
 };
 
-export const TaskContent = React.memo<{
+export const TaskContent = memo<{
   taskContent: TaskContentType;
   refetchTasks: () => Promise<unknown>;
 }>(({ taskContent, refetchTasks }) => {

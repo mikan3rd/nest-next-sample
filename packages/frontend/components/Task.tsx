@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo, useReducer } from "react";
 
 import { css } from "@emotion/core";
 import { Button, Header, Icon, Input, Label } from "semantic-ui-react";
@@ -44,12 +44,12 @@ export type TaskType = {
   }[];
 };
 
-export const Task = React.memo<{
+export const Task = memo<{
   task: TaskType;
   taskContents: TaskContentType[];
   refetchTasks: () => Promise<unknown>;
 }>(({ task, taskContents, refetchTasks }) => {
-  const [{ isActive, tmpTitle }, dispatch] = React.useReducer(reducer, {
+  const [{ isActive, tmpTitle }, dispatch] = useReducer(reducer, {
     isActive: false,
     tmpTitle: "",
   });

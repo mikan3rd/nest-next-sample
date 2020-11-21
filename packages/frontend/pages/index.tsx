@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 
 import { css } from "@emotion/core";
 import { InferGetServerSidePropsType } from "next";
@@ -16,7 +16,7 @@ export const getServerSideProps = async () => {
   return { props: { initialData: data } };
 };
 
-export default React.memo<InferGetServerSidePropsType<typeof getServerSideProps>>(({ initialData }) => {
+export default memo<InferGetServerSidePropsType<typeof getServerSideProps>>(({ initialData }) => {
   const { data, refetch } = useTasksQuery();
   const tasksData = data ? data.tasks : initialData.tasks;
 
