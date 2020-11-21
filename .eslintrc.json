@@ -1,8 +1,5 @@
 {
   "ignorePatterns": ["node_modules", ".next", "dist"],
-  "parserOptions": {
-    "tsconfigRootDir": "."
-  },
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
