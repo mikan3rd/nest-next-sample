@@ -3,12 +3,11 @@ import React from "react";
 import { css } from "@emotion/core";
 import { Button } from "semantic-ui-react";
 
-import { Color, useCategoriesQuery } from "../graphql/generated";
-
-import { AddTaskModal } from "./AddTaskModal";
-import { CategoryModal } from "./CategoryModal";
-import { Task, TaskType } from "./Task";
-import { TaskContentType } from "./TaskContent";
+import { AddTaskModal } from "@/components/AddTaskModal";
+import { CategoryModal } from "@/components/CategoryModal";
+import { Task, TaskType } from "@/components/Task";
+import { TaskContentType } from "@/components/TaskContent";
+import { Color, useCategoriesQuery } from "@/graphql/generated";
 
 export type CategoryType = {
   id: string;

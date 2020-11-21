@@ -5,9 +5,9 @@ import { InferGetServerSidePropsType } from "next";
 import Head from "next/head";
 import { Container, Header } from "semantic-ui-react";
 
-import { TaskList } from "../components/TaskList";
-import { client } from "../graphql/client";
-import { TasksDocument, TasksQuery, TasksQueryVariables, useTasksQuery } from "../graphql/generated";
+import { TaskList } from "@/components/TaskList";
+import { client } from "@/graphql/client";
+import { TasksDocument, TasksQuery, TasksQueryVariables, useTasksQuery } from "@/graphql/generated";
 
 export const getServerSideProps = async () => {
   const { data } = await client.query<TasksQuery, TasksQueryVariables>({

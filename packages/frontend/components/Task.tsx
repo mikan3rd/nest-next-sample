@@ -3,8 +3,8 @@ import React from "react";
 import { css } from "@emotion/core";
 import { Button, Header, Icon, Input, Label } from "semantic-ui-react";
 
-import { TaskContent, TaskContentType } from "../components/TaskContent";
-import { Color, useAddTaskContentMutation, useDeleteTaskMutation } from "../graphql/generated";
+import { TaskContent, TaskContentType } from "@/components/TaskContent";
+import { Color, useAddTaskContentMutation, useDeleteTaskMutation } from "@/graphql/generated";
 
 type State = {
   isActive: boolean;

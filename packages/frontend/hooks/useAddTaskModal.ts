@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useAddTaskMutation } from "../graphql/generated";
+import { useAddTaskMutation } from "@/graphql/generated";
 
 type State = {
   title: string;

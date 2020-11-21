@@ -3,7 +3,7 @@ import React from "react";
 import { css } from "@emotion/core";
 import { Button, Checkbox, Popup } from "semantic-ui-react";
 
-import { useDeleteTaskContentMutation, useUpdateTaskContentMutation } from "../graphql/generated";
+import { useDeleteTaskContentMutation, useUpdateTaskContentMutation } from "@/graphql/generated";
 
 export type TaskContentType = {
   id: string;
