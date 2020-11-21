@@ -6,7 +6,11 @@
     "packages/*"
   ],
   "scripts": {
-    "lint": "eslint ."
+    "backend": "yarn workspace backend",
+    "frontend": "yarn workspace frontend",
+    "lint": "eslint .",
+    "lint:backend": "eslint ./packages/backend",
+    "lint:frontend": "eslint ./packages/frontend"
   },
   "devDependencies": {
     "@types/node": "14.14.9",
@@ -29,7 +33,7 @@
   },
   "lint-staged": {
     "packages/**/*.{ts,tsx}": [
-      "yarn lint --fix"
+      "eslint . --fix"
     ]
   },
   "husky": {

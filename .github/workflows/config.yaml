@@ -27,17 +27,13 @@ jobs:
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: ${{ runner.os }}-yarn-
 
-      - run: yarn install
-        working-directory: ./packages/backend
+      - run: yarn backend install
 
-      - run: yarn type-check
-        working-directory: ./packages/backend
+      - run: yarn backend type-check
 
-      - run: yarn lint
-        working-directory: ./packages/backend
+      - run: yarn lint:backend
 
-      - run: yarn build
-        working-directory: ./packages/backend
+      - run: yarn yarn backend build
 
       - name: Archive Build Artifact
         uses: actions/upload-artifact@main
@@ -69,17 +65,13 @@ jobs:
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: ${{ runner.os }}-yarn-
 
-      - run: yarn install
-        working-directory: ./packages/frontend
+      - run: yarn frontend install
 
-      - run: yarn type-check
-        working-directory: ./packages/frontend
+      - run: yarn frontend type-check
 
-      - run: yarn lint
-        working-directory: ./packages/frontend
+      - run: yarn lint:frontend
 
-      - run: yarn build
-        working-directory: ./packages/frontend
+      - run: yarn frontend build
         env:
           SERVER_APOLLO_URI: "http://localhost:3300"
           PUBLIC_APOLLO_URI: "http://localhost:3300"

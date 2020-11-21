@@ -3,9 +3,10 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
 import { AddTaskInput } from "../dto/task.dto";
-import { TaskModel } from "../models/task.model";
 
 import { CategoryService } from "./category.service";
+
+import { TaskModel } from "@/models/task.model";
 
 @Injectable()
 export class TaskService {

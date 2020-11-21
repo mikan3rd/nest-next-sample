@@ -3,7 +3,8 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
 import { AddCategoryInput } from "../dto/category.dto";
-import { CategoryModel } from "../models/category.model";
+
+import { CategoryModel } from "@/models/category.model";
 
 @Injectable()
 export class CategoryService {

@@ -7,7 +7,6 @@
     "build": "next build",
     "start": "next start",
     "type-check": "tsc --noEmit",
-    "lint": "eslint .",
     "codegen": "graphql-codegen --config codegen.yml"
   },
   "dependencies": {
