@@ -50,4 +50,4 @@ lerna-debug.log*
 # vercel
 .vercel
 
-docker
+docker/db/data

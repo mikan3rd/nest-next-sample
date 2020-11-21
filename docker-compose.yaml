@@ -21,6 +21,7 @@ services:
   mysql:
     image: mysql:5.7
     command: mysqld
+    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_USER: docker
@@ -32,7 +33,6 @@ services:
     volumes:
       - ./docker/db/data:/var/lib/mysql
       - ./docker/db/my.cnf:/etc/mysql/conf.d/my.cnf
-      - ./docker/db/sql:/docker-entrypoint-initdb.d
 
   migrate:
     << : *dev-base
