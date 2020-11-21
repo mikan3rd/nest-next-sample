@@ -3,7 +3,7 @@ import React, { memo } from "react";
 import { css } from "@emotion/core";
 import { Button, Checkbox, Popup } from "semantic-ui-react";
 
-import { useDeleteTaskContentMutation, useUpdateTaskContentMutation } from "@/graphql/generated";
+import { useTaskContent } from "@/hooks/useTaskContent";
 
 export type TaskContentType = {
   id: string;
@@ -17,20 +17,9 @@ export const TaskContent = memo<{
   taskContent: TaskContentType;
   refetchTasks: () => Promise<unknown>;
 }>(({ taskContent, refetchTasks }) => {
-  const [updateTaskContent] = useUpdateTaskContentMutation();
-  const [deleteTaskContent] = useDeleteTaskContentMutation();
+  const { handleChangeChecked, handleDelete } = useTaskContent({ taskContent, refetchTasks });
 
   const { id, title, checked } = taskContent;
-
-  const handleChangeChecked = async (checked: boolean) => {
-    await updateTaskContent({ variables: { taskContent: { id, checked } } });
-    await refetchTasks();
-  };
-
-  const handleDelete = async () => {
-    await deleteTaskContent({ variables: { id } });
-    await refetchTasks();
-  };
 
   return (
     <div
