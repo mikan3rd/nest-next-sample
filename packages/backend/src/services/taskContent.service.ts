@@ -2,10 +2,9 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
-import { AddTaskContentInput, UpdateTaskContentInput } from "../dto/taskContent.dto";
-import { TaskContentModel } from "../models/taskContent.model";
-
-import { TaskService } from "./task.service";
+import { AddTaskContentInput, UpdateTaskContentInput } from "@/dto/taskContent.dto";
+import { TaskContentModel } from "@/models/taskContent.model";
+import { TaskService } from "@/services/task.service";
 
 @Injectable()
 export class TaskContentService {

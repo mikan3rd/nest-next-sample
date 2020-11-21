@@ -1,7 +1,7 @@
 import { Field, ID, ObjectType, registerEnumType } from "@nestjs/graphql";
 import { Column, CreateDateColumn, Entity, ManyToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
-import { TaskModel } from "./task.model";
+import { TaskModel } from "@/models/task.model";
 
 export enum Color {
   red = "red",

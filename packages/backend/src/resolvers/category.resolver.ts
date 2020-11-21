@@ -1,9 +1,9 @@
 import { Inject } from "@nestjs/common";
 import { Args, ID, Mutation, Query, Resolver } from "@nestjs/graphql";
 
-import { AddCategoryInput } from "../dto/category.dto";
-import { CategoryModel } from "../models/category.model";
-import { CategoryService } from "../services/category.service";
+import { AddCategoryInput } from "@/dto/category.dto";
+import { CategoryModel } from "@/models/category.model";
+import { CategoryService } from "@/services/category.service";
 
 @Resolver((of) => CategoryModel)
 export class CategoryResolver {

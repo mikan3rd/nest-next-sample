@@ -1,9 +1,9 @@
 import { Inject } from "@nestjs/common";
 import { Args, ID, Mutation, Query, Resolver } from "@nestjs/graphql";
 
-import { AddTaskInput } from "../dto/task.dto";
-import { TaskModel } from "../models/task.model";
-import { TaskService } from "../services/task.service";
+import { AddTaskInput } from "@/dto/task.dto";
+import { TaskModel } from "@/models/task.model";
+import { TaskService } from "@/services/task.service";
 
 @Resolver((of) => TaskModel)
 export class TaskResolver {

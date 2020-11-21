@@ -10,8 +10,8 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 
-import { CategoryModel } from "./category.model";
-import { TaskContentModel } from "./taskContent.model";
+import { CategoryModel } from "@/models/category.model";
+import { TaskContentModel } from "@/models/taskContent.model";
 
 @ObjectType()
 @Entity("tasks")

@@ -2,8 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 
-import { AddCategoryInput } from "../dto/category.dto";
-
+import { AddCategoryInput } from "@/dto/category.dto";
 import { CategoryModel } from "@/models/category.model";
 
 @Injectable()
