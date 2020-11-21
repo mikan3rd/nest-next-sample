@@ -3,32 +3,9 @@ import React from "react";
 import { css } from "@emotion/core";
 import { Button, Dropdown, Input, Modal } from "semantic-ui-react";
 
-import { useAddTaskMutation } from "../graphql/generated";
+import { useAddTaskModal } from "../hooks/useAddTaskModal";
 
 import { CategoryType } from "./TaskList";
-
-type State = {
-  title: string;
-  categoryIds: string[];
-};
-
-type Action =
-  | { type: "initialize" }
-  | { type: "setTitle"; payload: string }
-  | { type: "setCategoryIds"; payload: string[] };
-
-const reducer: React.Reducer<State, Action> = (state, action) => {
-  switch (action.type) {
-    case "initialize":
-      return { ...state, isActive: false, tmpTitle: "", tmpChecked: false };
-    case "setTitle":
-      return { ...state, title: action.payload };
-    case "setCategoryIds":
-      return { ...state, categoryIds: action.payload };
-    default:
-      break;
-  }
-};
 
 export const AddTaskModal = React.memo<{
   open: boolean;
@@ -36,20 +13,11 @@ export const AddTaskModal = React.memo<{
   refetchTasks: () => Promise<unknown>;
   categories: CategoryType[];
 }>(({ open, setOpen, refetchTasks, categories }) => {
-  const [addTask] = useAddTaskMutation();
+  const { title, categoryIds, dispatch, handleAddTask } = useAddTaskModal({ setOpen, refetchTasks });
 
-  const [{ title, categoryIds }, dispatch] = React.useReducer(reducer, {
-    title: "",
-    categoryIds: [],
-  });
-
-  const handleAddTask = async () => {
-    await addTask({ variables: { task: { title, categoryIds } } });
-    await refetchTasks();
-    setOpen(false);
-  };
-
-  const categoryOptions = categories.map(({ id, name }) => ({ value: id, text: name }));
+  const categoryOptions = React.useMemo(() => categories.map(({ id, name }) => ({ value: id, text: name })), [
+    categories,
+  ]);
 
   return (
     <Modal open={open} onClose={() => setOpen(false)}>
