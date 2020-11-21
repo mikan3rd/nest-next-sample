@@ -33,7 +33,7 @@ jobs:
 
       - run: yarn lint:backend
 
-      - run: yarn yarn backend build
+      - run: yarn backend build
 
       - name: Archive Build Artifact
         uses: actions/upload-artifact@main
