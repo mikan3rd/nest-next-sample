@@ -80,4 +80,6 @@ jobs:
 
       - run: yarn build
         working-directory: ./packages/frontend
-
+        env:
+          SERVER_APOLLO_URI: "http://localhost:3300"
+          PUBLIC_APOLLO_URI: "http://localhost:3300"

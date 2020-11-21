@@ -49,3 +49,5 @@ lerna-debug.log*
 
 # vercel
 .vercel
+
+docker/db/data
