@@ -1,37 +1,13 @@
-import React, { memo, useReducer } from "react";
+import React, { memo, useMemo } from "react";
 
 import { css } from "@emotion/core";
 import { Button, Dropdown, Input, Modal, Table } from "semantic-ui-react";
 
 import { CategoryType } from "@/components/TaskList";
-import { Color, useAddCategoryMutation, useDeleteCategoryMutation } from "@/graphql/generated";
+import { Color } from "@/graphql/generated";
+import { useCategoryModal } from "@/hooks/useCategoryModal";
 
-type State = {
-  isEditing: boolean;
-  title: string;
-  color: Color;
-};
-
-type Action =
-  | { type: "initialize" }
-  | { type: "setIsEditing"; payload: boolean }
-  | { type: "setTitle"; payload: string }
-  | { type: "setColor"; payload: Color };
-
-const reducer: React.Reducer<State, Action> = (state, action) => {
-  switch (action.type) {
-    case "initialize":
-      return { ...state, isEditing: false, title: "" };
-    case "setIsEditing":
-      return { ...state, isEditing: action.payload };
-    case "setTitle":
-      return { ...state, title: action.payload };
-    case "setColor":
-      return { ...state, color: action.payload };
-    default:
-      break;
-  }
-};
+const colorOptions = Object.values(Color).map((colorName) => ({ value: colorName, text: colorName }));
 
 export const CategoryModal = memo<{
   open: boolean;
@@ -39,29 +15,9 @@ export const CategoryModal = memo<{
   refetchCategories: () => Promise<unknown>;
   categories: CategoryType[];
 }>(({ open, setOpen, refetchCategories, categories }) => {
-  const [addCategory] = useAddCategoryMutation();
-  const [deleteCategory] = useDeleteCategoryMutation();
-
-  const [{ isEditing, title, color }, dispatch] = useReducer(reducer, {
-    isEditing: false,
-    title: "",
-    color: Color.Red,
+  const { isEditing, title, color, dispatch, handleAddCategory, handleDeleteCategory } = useCategoryModal({
+    refetchCategories,
   });
-
-  const createColorOptions = () => {
-    return Object.values(Color).map((colorName) => ({ value: colorName, text: colorName }));
-  };
-
-  const handleAddCategory = async () => {
-    await addCategory({ variables: { category: { name: title, color } } });
-    await refetchCategories();
-    dispatch({ type: "initialize" });
-  };
-
-  const handleDeleteCategory = async (id: string) => {
-    await deleteCategory({ variables: { id } });
-    await refetchCategories();
-  };
 
   return (
     <Modal open={open} onClose={() => setOpen(false)}>
@@ -105,7 +61,7 @@ export const CategoryModal = memo<{
                   </Table.Cell>
                   <Table.Cell>
                     <Dropdown
-                      options={createColorOptions()}
+                      options={colorOptions}
                       search
                       selection
                       value={color}

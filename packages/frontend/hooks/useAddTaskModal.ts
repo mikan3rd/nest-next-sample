@@ -27,7 +27,7 @@ const reducer: React.Reducer<State, Action> = (state, action) => {
 
 type Props = {
   setOpen: (open: boolean) => void;
-  refetchTasks: () => void;
+  refetchTasks: () => Promise<unknown>;
 };
 
 export const useAddTaskModal = ({ setOpen, refetchTasks }: Props) => {
