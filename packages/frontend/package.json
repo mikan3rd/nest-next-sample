@@ -11,8 +11,8 @@
     "codegen": "graphql-codegen --config codegen.yml"
   },
   "dependencies": {
-    "@apollo/client": "3.2.5",
-    "@emotion/babel-preset-css-prop": "10.1.0",
+    "@apollo/client": "3.2.7",
+    "@emotion/babel-preset-css-prop": "10.2.1",
     "@emotion/core": "10.1.1",
     "graphql": "15.4.0",
     "next": "9.5.5",
@@ -22,11 +22,11 @@
     "semantic-ui-react": "2.0.1"
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "1.19.0",
+    "@graphql-codegen/cli": "1.19.2",
     "@graphql-codegen/introspection": "1.18.0",
     "@graphql-codegen/typescript": "1.17.11",
-    "@graphql-codegen/typescript-operations": "1.17.8",
-    "@graphql-codegen/typescript-react-apollo": "2.0.7",
-    "@types/react": "16.9.55"
+    "@graphql-codegen/typescript-operations": "1.17.10",
+    "@graphql-codegen/typescript-react-apollo": "2.1.1",
+    "@types/react": "16.14.1"
   }
 }
