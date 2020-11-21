@@ -3,9 +3,9 @@ import React from "react";
 import { css } from "@emotion/core";
 import { Button, Dropdown, Input, Modal } from "semantic-ui-react";
 
-import { useAddTaskModal } from "../hooks/useAddTaskModal";
-
 import { CategoryType } from "./TaskList";
+
+import { useAddTaskModal } from "@/hooks/useAddTaskModal";
 
 export const AddTaskModal = React.memo<{
   open: boolean;
