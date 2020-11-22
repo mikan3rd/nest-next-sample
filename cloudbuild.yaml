@@ -1,0 +1,75 @@
+steps:
+
+  - id: 'Build: docker image'
+    name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'build', '.',
+      '-f', 'Dockerfile.prod',
+      '-t', 'gcr.io/$PROJECT_ID/build:$COMMIT_SHA',
+    ]
+
+  - id: 'Run: cloudsql-proxy'
+    name: 'gcr.io/cloudsql-docker/gce-proxy:1.16'
+    args: [
+      '/cloud_sql_proxy',
+      '-dir=/cloudsql',
+      '-instances=${_CLOUD_SQL_CONNECTION_NAME}'
+    ]
+    volumes:
+      - name: cloudsql
+        path: /cloudsql
+
+  - id: 'Migrate: database'
+    name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'run',
+      '-v', 'cloudsql:/cloudsql',
+      '-w', '/app/packages/backend',
+      '-e', 'DB_SOCKET_PATH=/cloudsql/${_CLOUD_SQL_CONNECTION_NAME}',
+      '-e', 'DB_HOST=/cloudsql/${_CLOUD_SQL_CONNECTION_NAME}',
+      '-e', 'DB_PORT=${_DB_PORT}',
+      '-e', 'DB_USERNAME=${_DB_USERNAME}',
+      '-e', 'DB_PASSWORD=${_DB_PASSWORD}',
+      '-e', 'DB_NAME=${_DB_NAME}',
+      'gcr.io/$PROJECT_ID/build:$COMMIT_SHA',
+      'yarn', 'migrate:run'
+    ]
+    volumes:
+      - name: cloudsql
+        path: /cloudsql
+    waitFor:
+      - 'Build: docker image'
+
+  - id: 'Kill: cloudsql-proxy'
+    name: 'gcr.io/cloud-builders/docker'
+    waitFor:
+      - 'Migrate: database'
+    entrypoint: 'bash'
+    args: ['-c', 'docker ps -q --filter ancestor="gcr.io/cloudsql-docker/gce-proxy:1.16"|xargs docker stop']
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/build:$COMMIT_SHA']
+    waitFor:
+      - 'Migrate: database'
+
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args: [
+      'run', 'deploy', '$_CLOUD_RUN_SERVICE_NAME',
+      '--image', 'gcr.io/$PROJECT_ID/build:$COMMIT_SHA',
+      '--region', 'asia-northeast1',
+      '--platform', 'managed',
+      '--memory', '128Mi',
+      '--set-cloudsql-instances', '${_CLOUD_SQL_CONNECTION_NAME}',
+      '--allow-unauthenticated',
+      '--set-env-vars', '
+        DB_SOCKET_PATH=/cloudsql/${_CLOUD_SQL_CONNECTION_NAME},
+        DB_HOST=/cloudsql/${_CLOUD_SQL_CONNECTION_NAME},
+        DB_PORT=${_DB_PORT},
+        DB_USERNAME=${_DB_USERNAME},
+        DB_PASSWORD=${_DB_PASSWORD},
+        DB_NAME=${_DB_NAME}'
+    ]
+
+images:
+  - gcr.io/$PROJECT_ID/build:$COMMIT_SHA
