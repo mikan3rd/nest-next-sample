@@ -36,8 +36,8 @@ export const TaskContent = memo<{
       `}
     >
       <Checkbox checked={checked} onChange={(e, d) => handleChangeChecked(d.checked)} label={<label>{title}</label>} />
-      <Popup position="bottom right" trigger={<Button icon="ellipsis horizontal" />}>
-        <Button content="削除" color="red" onClick={handleDelete} css={css``} />
+      <Popup position="bottom right" hoverable trigger={<Button icon="ellipsis horizontal" />}>
+        <Button content="削除" color="red" onClick={handleDelete} />
       </Popup>
     </div>
   );
