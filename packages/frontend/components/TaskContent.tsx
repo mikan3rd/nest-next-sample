@@ -1,9 +1,9 @@
-import React from "react";
+import React, { memo } from "react";
 
 import { css } from "@emotion/core";
 import { Button, Checkbox, Popup } from "semantic-ui-react";
 
-import { useDeleteTaskContentMutation, useUpdateTaskContentMutation } from "@/graphql/generated";
+import { useTaskContent } from "@/hooks/useTaskContent";
 
 export type TaskContentType = {
   id: string;
@@ -13,24 +13,13 @@ export type TaskContentType = {
   updatedAt: number;
 };
 
-export const TaskContent = React.memo<{
+export const TaskContent = memo<{
   taskContent: TaskContentType;
   refetchTasks: () => Promise<unknown>;
 }>(({ taskContent, refetchTasks }) => {
-  const [updateTaskContent] = useUpdateTaskContentMutation();
-  const [deleteTaskContent] = useDeleteTaskContentMutation();
+  const { handleChangeChecked, handleDelete } = useTaskContent({ taskContent, refetchTasks });
 
   const { id, title, checked } = taskContent;
-
-  const handleChangeChecked = async (checked: boolean) => {
-    await updateTaskContent({ variables: { taskContent: { id, checked } } });
-    await refetchTasks();
-  };
-
-  const handleDelete = async () => {
-    await deleteTaskContent({ variables: { id } });
-    await refetchTasks();
-  };
 
   return (
     <div
@@ -47,8 +36,8 @@ export const TaskContent = React.memo<{
       `}
     >
       <Checkbox checked={checked} onChange={(e, d) => handleChangeChecked(d.checked)} label={<label>{title}</label>} />
-      <Popup position="bottom right" trigger={<Button icon="ellipsis horizontal" />}>
-        <Button content="削除" color="red" onClick={handleDelete} css={css``} />
+      <Popup position="bottom right" hoverable trigger={<Button icon="ellipsis horizontal" />}>
+        <Button content="削除" color="red" onClick={handleDelete} />
       </Popup>
     </div>
   );

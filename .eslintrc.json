@@ -19,7 +19,6 @@
     "es6": true
   },
   "rules": {
-    "import/no-named-as-default-member": ["off"],
     "react/display-name": ["off"],
     "react/prop-types": ["error", { "skipUndeclared": true }],
     "@typescript-eslint/no-unused-vars": ["warn", { "args": "none" }],

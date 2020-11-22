@@ -1,12 +1,12 @@
-import React from "react";
+import React, { memo, useState } from "react";
 
 import { css } from "@emotion/core";
 import { Button } from "semantic-ui-react";
 
 import { AddTaskModal } from "@/components/AddTaskModal";
 import { CategoryModal } from "@/components/CategoryModal";
-import { Task, TaskType } from "@/components/Task";
 import { TaskContentType } from "@/components/TaskContent";
+import { TaskSection, TaskType } from "@/components/TaskSection";
 import { Color, useCategoriesQuery } from "@/graphql/generated";
 
 export type CategoryType = {
@@ -22,9 +22,9 @@ type Props = {
   refetchTasks: () => Promise<unknown>;
 };
 
-export const TaskList = React.memo<Props>(({ tasksData, refetchTasks }) => {
-  const [addTaskModalOpen, setAddTaskModalOpen] = React.useState(false);
-  const [categoryModalOpen, setCategoryModalOpen] = React.useState(false);
+export const TaskList = memo<Props>(({ tasksData, refetchTasks }) => {
+  const [addTaskModalOpen, setAddTaskModalOpen] = useState(false);
+  const [categoryModalOpen, setCategoryModalOpen] = useState(false);
   const { data, refetch: refetchCategories } = useCategoriesQuery();
 
   if (!data) {
@@ -45,7 +45,7 @@ export const TaskList = React.memo<Props>(({ tasksData, refetchTasks }) => {
       <div>
         {tasksData.map((taskData) => {
           const { taskContents, ...task } = taskData;
-          return <Task key={task.id} task={task} taskContents={taskContents} refetchTasks={refetchTasks} />;
+          return <TaskSection key={task.id} task={task} taskContents={taskContents} refetchTasks={refetchTasks} />;
         })}
         <AddTaskModal
           open={addTaskModalOpen}

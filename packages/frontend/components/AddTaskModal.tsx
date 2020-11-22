@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo, useMemo } from "react";
 
 import { css } from "@emotion/core";
 import { Button, Dropdown, Input, Modal } from "semantic-ui-react";
@@ -6,7 +6,7 @@ import { Button, Dropdown, Input, Modal } from "semantic-ui-react";
 import { CategoryType } from "@/components/TaskList";
 import { useAddTaskModal } from "@/hooks/useAddTaskModal";
 
-export const AddTaskModal = React.memo<{
+export const AddTaskModal = memo<{
   open: boolean;
   setOpen: (open: boolean) => void;
   refetchTasks: () => Promise<unknown>;
@@ -14,9 +14,7 @@ export const AddTaskModal = React.memo<{
 }>(({ open, setOpen, refetchTasks, categories }) => {
   const { title, categoryIds, dispatch, handleAddTask } = useAddTaskModal({ setOpen, refetchTasks });
 
-  const categoryOptions = React.useMemo(() => categories.map(({ id, name }) => ({ value: id, text: name })), [
-    categories,
-  ]);
+  const categoryOptions = useMemo(() => categories.map(({ id, name }) => ({ value: id, text: name })), [categories]);
 
   return (
     <Modal open={open} onClose={() => setOpen(false)}>

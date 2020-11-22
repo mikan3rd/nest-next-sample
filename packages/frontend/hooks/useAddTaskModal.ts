@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useReducer } from "react";
 
 import { useAddTaskMutation } from "@/graphql/generated";
 
@@ -27,18 +27,18 @@ const reducer: React.Reducer<State, Action> = (state, action) => {
 
 type Props = {
   setOpen: (open: boolean) => void;
-  refetchTasks: () => void;
+  refetchTasks: () => Promise<unknown>;
 };
 
 export const useAddTaskModal = ({ setOpen, refetchTasks }: Props) => {
   const [addTask] = useAddTaskMutation();
 
-  const [{ title, categoryIds }, dispatch] = React.useReducer(reducer, {
+  const [{ title, categoryIds }, dispatch] = useReducer(reducer, {
     title: "",
     categoryIds: [],
   });
 
-  const handleAddTask = React.useCallback(async () => {
+  const handleAddTask = useCallback(async () => {
     await addTask({ variables: { task: { title, categoryIds } } });
     await refetchTasks();
     setOpen(false);
