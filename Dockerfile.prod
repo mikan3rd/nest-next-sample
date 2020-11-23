@@ -5,8 +5,6 @@ COPY . .
 
 WORKDIR /app/packages/backend
 RUN yarn install
+RUN yarn build
 
-WORKDIR /app/packages/frontend
-RUN yarn install
-
-WORKDIR /app
+CMD yarn start:prod

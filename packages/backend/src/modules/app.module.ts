@@ -16,6 +16,7 @@ type EnvironmentVariables = {
   DB_USERNAME: string;
   DB_PASSWORD: string;
   DB_NAME: string;
+  DB_SOCKET_PATH?: string;
 };
 
 @Module({
@@ -34,6 +35,7 @@ type EnvironmentVariables = {
         username: configService.get("DB_USERNAME"),
         password: configService.get("DB_PASSWORD"),
         database: configService.get("DB_NAME"),
+        extra: { socketPath: configService.get("DB_SOCKET_PATH") },
         autoLoadEntities: true,
         synchronize: false,
       }),

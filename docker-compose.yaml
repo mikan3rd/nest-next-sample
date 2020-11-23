@@ -21,7 +21,6 @@ services:
   mysql:
     image: mysql:5.7
     command: mysqld
-    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_USER: docker
