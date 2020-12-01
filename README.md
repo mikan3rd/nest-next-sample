@@ -107,7 +107,7 @@ mutation {
 
 ```graphql
 query {
-	task(id: 1) {
+  task(id: 1) {
     id
     title
     taskContents {
