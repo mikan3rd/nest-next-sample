@@ -87,3 +87,38 @@ yarn dev
 ```
 
 After successful launch, go to http://localhost:3000 in your browser!
+
+
+## GraphQL exmaple
+
+```graphql
+mutation {
+  saveTask(task: { title: "test", categoryIds: [1] }) {
+    id
+    title
+    categories {
+      id
+      name
+      color
+    }
+  }
+}
+```
+
+```graphql
+query {
+	task(id: 1) {
+    id
+    title
+    taskContents {
+      id
+      checked
+    }
+    categories {
+      id
+      name
+    }
+  }
+}
+```
+

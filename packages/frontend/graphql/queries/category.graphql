@@ -1,5 +1,5 @@
 query categories {
-	categories {
+  categories {
     id
     name
     color
