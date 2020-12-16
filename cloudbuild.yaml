@@ -59,7 +59,7 @@ steps:
       '--image', 'gcr.io/$PROJECT_ID/build:$COMMIT_SHA',
       '--region', 'asia-northeast1',
       '--platform', 'managed',
-      '--memory', '128Mi',
+      '--memory', '256Mi',
       '--set-cloudsql-instances', '${_CLOUD_SQL_CONNECTION_NAME}',
       '--allow-unauthenticated',
       '--set-env-vars', '
