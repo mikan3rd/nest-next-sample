@@ -28,7 +28,7 @@
     "@nestjs/graphql": "7.9.8",
     "@nestjs/platform-express": "7.6.12",
     "@nestjs/typeorm": "7.1.5",
-    "apollo-server-express": "2.20.0",
+    "apollo-server-express": "2.21.0",
     "graphql": "15.5.0",
     "graphql-tools": "6.2.6",
     "mysql": "2.18.1",
