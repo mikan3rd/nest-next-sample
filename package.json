@@ -13,12 +13,12 @@
     "lint:frontend": "eslint ./packages/frontend"
   },
   "devDependencies": {
-    "@types/node": "14.14.27",
-    "@typescript-eslint/eslint-plugin": "4.15.0",
-    "@typescript-eslint/parser": "4.15.0",
+    "@types/node": "14.14.30",
+    "@typescript-eslint/eslint-plugin": "4.15.1",
+    "@typescript-eslint/parser": "4.15.1",
     "eslint": "7.20.0",
     "eslint-config-prettier": "6.15.0",
-    "eslint-import-resolver-typescript": "2.3.0",
+    "eslint-import-resolver-typescript": "2.4.0",
     "eslint-import-resolver-webpack": "0.13.0",
     "eslint-plugin-emotion": "10.0.27",
     "eslint-plugin-import": "2.22.1",
