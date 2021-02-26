@@ -21,7 +21,7 @@
     "semantic-ui-react": "2.0.3"
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "1.20.1",
+    "@graphql-codegen/cli": "1.21.1",
     "@graphql-codegen/introspection": "1.18.1",
     "@graphql-codegen/typescript": "1.21.0",
     "@graphql-codegen/typescript-operations": "1.17.14",
