@@ -25,7 +25,7 @@
     "@nestjs/common": "7.6.13",
     "@nestjs/config": "0.6.3",
     "@nestjs/core": "7.6.13",
-    "@nestjs/graphql": "7.9.10",
+    "@nestjs/graphql": "7.9.11",
     "@nestjs/platform-express": "7.6.13",
     "@nestjs/typeorm": "7.1.5",
     "apollo-server-express": "2.21.0",
@@ -47,7 +47,7 @@
     "jest": "26.6.3",
     "prettier": "1.19.1",
     "supertest": "4.0.2",
-    "ts-jest": "26.5.2",
+    "ts-jest": "26.5.3",
     "ts-loader": "6.2.2",
     "tsconfig-paths": "3.9.0"
   },
