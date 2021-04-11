@@ -23,7 +23,7 @@
     "eslint-config-prettier": "8.1.0",
     "eslint-import-resolver-typescript": "2.4.0",
     "eslint-import-resolver-webpack": "0.13.0",
-    "eslint-plugin-emotion": "10.0.27",
+    "eslint-plugin-emotion": "11.0.0",
     "eslint-plugin-import": "2.22.1",
     "eslint-plugin-prettier": "3.3.1",
     "eslint-plugin-react": "7.23.2",
