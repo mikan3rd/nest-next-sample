@@ -5,6 +5,9 @@
   "workspaces": [
     "packages/*"
   ],
+  "engines": {
+    "node": "14"
+  },
   "scripts": {
     "backend": "yarn workspace backend",
     "frontend": "yarn workspace frontend",
