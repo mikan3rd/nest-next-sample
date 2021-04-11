@@ -8,45 +8,44 @@ steps:
       '-t', 'gcr.io/$PROJECT_ID/build:$COMMIT_SHA',
     ]
 
-  # If you use Cloud SQL, please uncomment it
-  # - id: 'Run: cloudsql-proxy'
-  #   name: 'gcr.io/cloudsql-docker/gce-proxy:1.16'
-  #   args: [
-  #     '/cloud_sql_proxy',
-  #     '-dir=/cloudsql',
-  #     '-instances=${_CLOUD_SQL_CONNECTION_NAME}'
-  #   ]
-  #   volumes:
-  #     - name: cloudsql
-  #       path: /cloudsql
+  - id: 'Run: cloudsql-proxy'
+    name: 'gcr.io/cloudsql-docker/gce-proxy:1.16'
+    args: [
+      '/cloud_sql_proxy',
+      '-dir=/cloudsql',
+      '-instances=${_CLOUD_SQL_CONNECTION_NAME}'
+    ]
+    volumes:
+      - name: cloudsql
+        path: /cloudsql
 
-  # - id: 'Migrate: database'
-  #   name: 'gcr.io/cloud-builders/docker'
-  #   args: [
-  #     'run',
-  #     '-v', 'cloudsql:/cloudsql',
-  #     '-w', '/app/packages/backend',
-  #     '-e', 'DB_SOCKET_PATH=/cloudsql/${_CLOUD_SQL_CONNECTION_NAME}',
-  #     '-e', 'DB_HOST=/cloudsql/${_CLOUD_SQL_CONNECTION_NAME}',
-  #     '-e', 'DB_PORT=${_DB_PORT}',
-  #     '-e', 'DB_USERNAME=${_DB_USERNAME}',
-  #     '-e', 'DB_PASSWORD=${_DB_PASSWORD}',
-  #     '-e', 'DB_NAME=${_DB_NAME}',
-  #     'gcr.io/$PROJECT_ID/build:$COMMIT_SHA',
-  #     'yarn', 'migrate:run'
-  #   ]
-  #   volumes:
-  #     - name: cloudsql
-  #       path: /cloudsql
-  #   waitFor:
-  #     - 'Build: docker image'
+  - id: 'Migrate: database'
+    name: 'gcr.io/cloud-builders/docker'
+    args: [
+      'run',
+      '-v', 'cloudsql:/cloudsql',
+      '-w', '/app/packages/backend',
+      '-e', 'DB_SOCKET_PATH=/cloudsql/${_CLOUD_SQL_CONNECTION_NAME}',
+      '-e', 'DB_HOST=/cloudsql/${_CLOUD_SQL_CONNECTION_NAME}',
+      '-e', 'DB_PORT=${_DB_PORT}',
+      '-e', 'DB_USERNAME=${_DB_USERNAME}',
+      '-e', 'DB_PASSWORD=${_DB_PASSWORD}',
+      '-e', 'DB_NAME=${_DB_NAME}',
+      'gcr.io/$PROJECT_ID/build:$COMMIT_SHA',
+      'yarn', 'migrate:run'
+    ]
+    volumes:
+      - name: cloudsql
+        path: /cloudsql
+    waitFor:
+      - 'Build: docker image'
 
-  # - id: 'Kill: cloudsql-proxy'
-  #   name: 'gcr.io/cloud-builders/docker'
-  #   waitFor:
-  #     - 'Migrate: database'
-  #   entrypoint: 'bash'
-  #   args: ['-c', 'docker ps -q --filter ancestor="gcr.io/cloudsql-docker/gce-proxy:1.16"|xargs docker stop']
+  - id: 'Kill: cloudsql-proxy'
+    name: 'gcr.io/cloud-builders/docker'
+    waitFor:
+      - 'Migrate: database'
+    entrypoint: 'bash'
+    args: ['-c', 'docker ps -q --filter ancestor="gcr.io/cloudsql-docker/gce-proxy:1.16"|xargs docker stop']
 
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/$PROJECT_ID/build:$COMMIT_SHA']
