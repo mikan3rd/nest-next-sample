@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 
-import { css } from "@emotion/core";
+import { css } from "@emotion/react";
 import { Button, Dropdown, Input, Modal, Table } from "semantic-ui-react";
 
 import { CategoryType } from "@/components/TaskList";

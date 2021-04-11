@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 
-import { css } from "@emotion/core";
+import { css } from "@emotion/react";
 import { InferGetServerSidePropsType } from "next";
 import Head from "next/head";
 import { Container, Header } from "semantic-ui-react";

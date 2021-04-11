@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 
-import { css } from "@emotion/core";
+import { css } from "@emotion/react";
 import { Button, Header, Icon, Input, Label } from "semantic-ui-react";
 
 import { TaskContent, TaskContentType } from "@/components/TaskContent";

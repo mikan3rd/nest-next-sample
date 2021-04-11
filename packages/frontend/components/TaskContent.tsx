@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 
-import { css } from "@emotion/core";
+import { css } from "@emotion/react";
 import { Button, Checkbox, Popup } from "semantic-ui-react";
 
 import { useTaskContent } from "@/hooks/useTaskContent";

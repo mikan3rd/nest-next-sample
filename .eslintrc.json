@@ -10,7 +10,7 @@
     "plugin:import/warnings",
     "plugin:import/typescript"
   ],
-  "plugins": ["react", "react-hooks", "@typescript-eslint", "prettier", "emotion"],
+  "plugins": ["react", "react-hooks", "@typescript-eslint", "prettier", "@emotion"],
   "env": {
     "node": true,
     "browser": true,

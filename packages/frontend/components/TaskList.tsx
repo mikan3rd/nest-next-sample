@@ -1,6 +1,6 @@
 import React, { memo, useState } from "react";
 
-import { css } from "@emotion/core";
+import { css } from "@emotion/react";
 import { Button } from "semantic-ui-react";
 
 import { AddTaskModal } from "@/components/AddTaskModal";
