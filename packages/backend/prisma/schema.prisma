@@ -8,11 +8,11 @@ datasource db {
 }
 
 model Category {
-  id               Int                @id @default(autoincrement())
-  name             String             @db.VarChar(255)
-  color            CategoryColor
-  createdAt        DateTime           @default(now()) @db.DateTime(6)
-  updatedAt        DateTime           @default(now()) @db.DateTime(6) @updatedAt
+  id                   Int                    @id @default(autoincrement())
+  name                 String                 @db.VarChar(255)
+  color                CategoryColor
+  createdAt            DateTime               @default(now()) @db.DateTime(6)
+  updatedAt            DateTime               @default(now()) @updatedAt @db.DateTime(6)
   taskCategoryRelation TaskCategoryRelation[]
 }
 
@@ -21,31 +21,31 @@ model TaskContent {
   checked   Int      @default(0) @db.TinyInt
   title     String   @db.VarChar(255)
   createdAt DateTime @default(now()) @db.DateTime(6)
-  updatedAt DateTime @default(now()) @db.DateTime(6) @updatedAt
+  updatedAt DateTime @default(now()) @updatedAt @db.DateTime(6)
   taskId    Int
-  task     Task    @relation(fields: [taskId], references: [id])
+  task      Task     @relation(fields: [taskId], references: [id])
 
-  @@index([taskId])
+  @@index([taskId], name: "TaskContent.taskId_index")
 }
 
 model Task {
-  id               Int                @id @default(autoincrement())
-  title            String             @db.VarChar(255)
-  createdAt        DateTime           @default(now()) @db.DateTime(6)
-  updatedAt        DateTime           @default(now()) @db.DateTime(6) @updatedAt
-  taskContent     TaskContent[]
+  id                   Int                    @id @default(autoincrement())
+  title                String                 @db.VarChar(255)
+  createdAt            DateTime               @default(now()) @db.DateTime(6)
+  updatedAt            DateTime               @default(now()) @updatedAt @db.DateTime(6)
   taskCategoryRelation TaskCategoryRelation[]
+  taskContent          TaskContent[]
 }
 
 model TaskCategoryRelation {
   task_id     Int
   category_id Int
-  category  Category @relation(fields: [category_id], references: [id])
-  task       Task      @relation(fields: [task_id], references: [id])
+  category    Category @relation(fields: [category_id], references: [id])
+  task        Task     @relation(fields: [task_id], references: [id])
 
   @@id([task_id, category_id])
-  @@index([category_id])
-  @@index([task_id])
+  @@index([category_id], name: "TaskCategoryRelation.category_id_index")
+  @@index([task_id], name: "TaskCategoryRelation.task_id_index")
 }
 
 enum CategoryColor {
