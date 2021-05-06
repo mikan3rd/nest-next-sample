@@ -1,14 +1,13 @@
 import { Module, forwardRef } from "@nestjs/common";
-import { TypeOrmModule } from "@nestjs/typeorm";
 
-import { TaskContentModel } from "@/models/taskContent.model";
 import { TaskModule } from "@/modules/task.module";
 import { TaskContentResolver } from "@/resolvers/taskContent.resolver";
+import { PrismaService } from "@/services/prisma.service";
 import { TaskContentService } from "@/services/taskContent.service";
 
 @Module({
-  imports: [TypeOrmModule.forFeature([TaskContentModel]), forwardRef(() => TaskModule)],
-  providers: [TaskContentService, TaskContentResolver],
+  imports: [forwardRef(() => TaskModule)],
+  providers: [TaskContentService, TaskContentResolver, PrismaService],
   exports: [TaskContentService],
 })
 export class TaskContentModule {}

@@ -39,32 +39,32 @@ enum Color {
 }
 
 type Query {
-  category(id: ID!): CategoryModel
-  categories: [CategoryModel!]!
   task(id: ID!): TaskModel
   tasks: [TaskModel!]!
+  category(id: ID!): CategoryModel
+  categories: [CategoryModel!]!
   taskContent(id: ID!): TaskContentModel
   taskContents: [TaskContentModel!]!
 }
 
 type Mutation {
-  saveCategory(category: AddCategoryInput!): CategoryModel!
-  deleteCategory(id: ID!): CategoryModel
   saveTask(task: AddTaskInput!): TaskModel!
   deleteTask(id: ID!): TaskModel
+  saveCategory(category: AddCategoryInput!): CategoryModel!
+  deleteCategory(id: ID!): CategoryModel
   saveTaskContent(taskContent: AddTaskContentInput!): TaskContentModel!
   updateTaskContent(taskContent: UpdateTaskContentInput!): TaskContentModel!
   deleteTaskContent(id: ID!): TaskContentModel
 }
 
-input AddCategoryInput {
-  name: String!
-  color: Color!
-}
-
 input AddTaskInput {
   title: String!
   categoryIds: [ID!]!
+}
+
+input AddCategoryInput {
+  name: String!
+  color: Color!
 }
 
 input AddTaskContentInput {

@@ -1,35 +1,33 @@
 import { Injectable } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
 
 import { AddCategoryInput } from "@/dto/category.dto";
-import { CategoryModel } from "@/models/category.model";
+import { PrismaService } from "@/services/prisma.service";
 
 @Injectable()
 export class CategoryService {
-  constructor(
-    @InjectRepository(CategoryModel)
-    private categoryRepository: Repository<CategoryModel>,
-  ) {}
+  constructor(private prisma: PrismaService) {}
 
   async findOne(id: number) {
-    return this.categoryRepository.findOne(id, { relations: ["tasks"] });
+    return await this.prisma.category.findUnique({ where: { id } });
   }
 
   async findAll() {
-    return this.categoryRepository.find({ relations: ["tasks"] });
+    return await this.prisma.category.findMany({
+      include: {
+        taskCategoryRelation: { include: { task: true } },
+      },
+    });
   }
 
   async findByIds(ids: number[]) {
-    return this.categoryRepository.findByIds(ids);
+    return await this.prisma.category.findMany({ where: { id: { in: ids } } });
   }
 
   async save(payload: AddCategoryInput) {
-    return this.categoryRepository.save({ ...payload });
+    return await this.prisma.category.create({ data: payload });
   }
 
   async delete(id: number) {
-    await this.categoryRepository.delete(id);
-    return await this.findOne(id);
+    return await this.prisma.category.delete({ where: { id } });
   }
 }

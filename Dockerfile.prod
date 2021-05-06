@@ -1,10 +1,13 @@
 FROM node:14-alpine
 
 WORKDIR /app
+
+ENV NODE_ENV=production
+
 COPY . .
 
 WORKDIR /app/packages/backend
-RUN yarn install
+RUN yarn install --production
 RUN yarn build
 
 CMD yarn start:prod

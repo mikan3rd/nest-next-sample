@@ -18,7 +18,7 @@ model Category {
 
 model TaskContent {
   id        Int      @id @default(autoincrement())
-  checked   Int      @default(0) @db.TinyInt
+  checked   Boolean  @default(false) @db.TinyInt
   title     String   @db.VarChar(255)
   createdAt DateTime @default(now()) @db.DateTime(6)
   updatedAt DateTime @default(now()) @updatedAt @db.DateTime(6)
