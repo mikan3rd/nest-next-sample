@@ -48,6 +48,18 @@ services:
     ports:
       - "3300:3300"
 
+  backend-prod:
+    << : *dev-base
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    tty: true
+    depends_on:
+      - mysql
+      - migrate
+    ports:
+      - "3300:3300"
+
   frontend:
     << : *dev-base
     working_dir: /app/packages/frontend
