@@ -34,7 +34,7 @@ model Task {
   createdAt            DateTime               @default(now()) @db.DateTime(6)
   updatedAt            DateTime               @default(now()) @updatedAt @db.DateTime(6)
   taskCategoryRelation TaskCategoryRelation[]
-  taskContent          TaskContent[]
+  taskContents         TaskContent[]
 }
 
 model TaskCategoryRelation {

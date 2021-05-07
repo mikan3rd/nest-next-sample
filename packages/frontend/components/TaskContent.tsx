@@ -3,21 +3,14 @@ import React, { memo } from "react";
 import { css } from "@emotion/react";
 import { Button, Checkbox, Popup } from "semantic-ui-react";
 
+import { TasksQuery } from "@/graphql/generated";
 import { useTaskContent } from "@/hooks/useTaskContent";
 
-export type TaskContentType = {
-  id: number;
-  checked: boolean;
-  title: string;
-  createdAt: number;
-  updatedAt: number;
-};
-
 export const TaskContent = memo<{
-  taskContent: TaskContentType;
+  taskContent: TasksQuery["tasks"][number]["taskContents"][number];
   refetchTasks: () => Promise<unknown>;
 }>(({ taskContent, refetchTasks }) => {
-  const { handleChangeChecked, handleDelete } = useTaskContent({ taskContent, refetchTasks });
+  const { handleChangeChecked, handleDelete } = useTaskContent({ taskContentId: taskContent.id, refetchTasks });
 
   const { id, title, checked } = taskContent;
 

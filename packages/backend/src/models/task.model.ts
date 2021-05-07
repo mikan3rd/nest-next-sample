@@ -1,6 +1,6 @@
 import { Field, Int, ObjectType } from "@nestjs/graphql";
 
-import { CategoryModel } from "@/models/category.model";
+import { TaskCategoryRelation } from "@/models/taskCategoryRelation.model";
 import { TaskContentModel } from "@/models/taskContent.model";
 
 @ObjectType()
@@ -17,9 +17,9 @@ export class TaskModel {
   @Field()
   updatedAt: Date;
 
-  @Field((type) => [TaskContentModel], { defaultValue: [] })
+  @Field((type) => [TaskContentModel])
   taskContents: TaskContentModel[];
 
-  @Field((type) => [CategoryModel], { defaultValue: [] })
-  categories: CategoryModel[];
+  @Field((type) => [TaskCategoryRelation])
+  taskCategoryRelation: TaskCategoryRelation[];
 }

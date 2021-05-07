@@ -105,6 +105,13 @@ export type QueryTaskContentArgs = {
   id: Scalars["Int"];
 };
 
+export type TaskCategoryRelation = {
+  task_id: Scalars["Int"];
+  category_id: Scalars["Int"];
+  task: TaskModel;
+  category: CategoryModel;
+};
+
 export type TaskContentModel = {
   id: Scalars["Int"];
   checked: Scalars["Boolean"];
@@ -120,7 +127,7 @@ export type TaskModel = {
   createdAt: Scalars["Date"];
   updatedAt: Scalars["Date"];
   taskContents: Array<TaskContentModel>;
-  categories: Array<CategoryModel>;
+  taskCategoryRelation: Array<TaskCategoryRelation>;
 };
 
 export type UpdateTaskContentInput = {
@@ -183,7 +190,7 @@ export type TasksQuery = {
   tasks: Array<
     Pick<TaskModel, "id" | "title" | "createdAt" | "updatedAt"> & {
       taskContents: Array<Pick<TaskContentModel, "id" | "checked" | "title" | "createdAt" | "updatedAt">>;
-      categories: Array<Pick<CategoryModel, "id" | "name" | "color">>;
+      taskCategoryRelation: Array<{ category: Pick<CategoryModel, "id" | "name" | "color"> }>;
     }
   >;
 };
@@ -511,10 +518,12 @@ export const TasksDocument = gql`
         createdAt
         updatedAt
       }
-      categories {
-        id
-        name
-        color
+      taskCategoryRelation {
+        category {
+          id
+          name
+          color
+        }
       }
     }
   }

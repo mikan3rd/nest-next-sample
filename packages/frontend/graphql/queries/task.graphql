@@ -11,10 +11,12 @@ query tasks {
       createdAt
       updatedAt
     }
-    categories {
-      id
-      name
-      color
+    taskCategoryRelation {
+      category {
+        id
+        name
+        color
+      }
     }
   }
 }

@@ -3,33 +3,20 @@ import React, { memo } from "react";
 import { css } from "@emotion/react";
 import { Button, Header, Icon, Input, Label } from "semantic-ui-react";
 
-import { TaskContent, TaskContentType } from "@/components/TaskContent";
-import { Color } from "@/graphql/generated";
+import { TaskContent } from "@/components/TaskContent";
+import { TasksQuery } from "@/graphql/generated";
 import { useTaskSection } from "@/hooks/useTaskSection";
 
-export type TaskType = {
-  id: number;
-  title: string;
-  createdAt: number;
-  updatedAt: number;
-  categories: {
-    id: number;
-    name: string;
-    color: Color;
-  }[];
-};
-
 export const TaskSection = memo<{
-  task: TaskType;
-  taskContents: TaskContentType[];
+  task: TasksQuery["tasks"][number];
   refetchTasks: () => Promise<unknown>;
-}>(({ task, taskContents, refetchTasks }) => {
+}>(({ task, refetchTasks }) => {
   const { isActive, tmpTitle, dispatch, handleAddTaskContent, handleDeleteTask } = useTaskSection({
-    task,
+    taskId: task.id,
     refetchTasks,
   });
 
-  const { id, title, categories } = task;
+  const { id, title, taskContents, taskCategoryRelation } = task;
 
   return (
     <div
@@ -62,7 +49,7 @@ export const TaskSection = memo<{
               margin-top: 4px;
             `}
           >
-            {categories.map((category) => {
+            {taskCategoryRelation.map(({ category }) => {
               return (
                 <Label
                   key={category.id}

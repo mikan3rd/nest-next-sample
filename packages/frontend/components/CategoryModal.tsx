@@ -3,8 +3,7 @@ import React, { memo } from "react";
 import { css } from "@emotion/react";
 import { Button, Dropdown, Input, Modal, Table } from "semantic-ui-react";
 
-import { CategoryType } from "@/components/TaskList";
-import { Color } from "@/graphql/generated";
+import { CategoriesQuery, Color } from "@/graphql/generated";
 import { useCategoryModal } from "@/hooks/useCategoryModal";
 
 const colorOptions = Object.values(Color).map((colorName) => ({ value: colorName, text: colorName }));
@@ -13,7 +12,7 @@ export const CategoryModal = memo<{
   open: boolean;
   setOpen: (open: boolean) => void;
   refetchCategories: () => Promise<unknown>;
-  categories: CategoryType[];
+  categories: CategoriesQuery["categories"];
 }>(({ open, setOpen, refetchCategories, categories }) => {
   const { isEditing, title, color, dispatch, handleAddCategory, handleDeleteCategory } = useCategoryModal({
     refetchCategories,

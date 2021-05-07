@@ -11,7 +11,7 @@ export class TaskService {
     return await this.prisma.task.findUnique({
       where: { id },
       include: {
-        taskContent: true,
+        taskContents: true,
         taskCategoryRelation: {
           include: { category: true },
         },
@@ -23,7 +23,7 @@ export class TaskService {
     return await this.prisma.task.findMany({
       orderBy: { createdAt: "asc" },
       include: {
-        taskContent: true,
+        taskContents: true,
         taskCategoryRelation: {
           include: { category: true },
         },

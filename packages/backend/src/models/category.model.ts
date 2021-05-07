@@ -27,6 +27,6 @@ export class CategoryModel {
   @Field()
   updatedAt: Date;
 
-  @Field((type) => TaskModel, { defaultValue: [] })
+  @Field((type) => TaskModel)
   tasks: TaskModel[];
 }

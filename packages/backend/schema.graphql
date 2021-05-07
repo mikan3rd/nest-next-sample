@@ -2,6 +2,13 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type TaskCategoryRelation {
+  task_id: Int!
+  category_id: Int!
+  task: TaskModel!
+  category: CategoryModel!
+}
+
 type TaskContentModel {
   id: Int!
   checked: Boolean!
@@ -20,7 +27,7 @@ type TaskModel {
   createdAt: Date!
   updatedAt: Date!
   taskContents: [TaskContentModel!]!
-  categories: [CategoryModel!]!
+  taskCategoryRelation: [TaskCategoryRelation!]!
 }
 
 type CategoryModel {
