@@ -10,7 +10,7 @@ import { TaskSection, TaskType } from "@/components/TaskSection";
 import { Color, useCategoriesQuery } from "@/graphql/generated";
 
 export type CategoryType = {
-  id: string;
+  id: number;
   name: string;
   color: Color;
   createdAt: number;

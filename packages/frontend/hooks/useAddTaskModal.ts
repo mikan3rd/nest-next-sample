@@ -4,13 +4,13 @@ import { useAddTaskMutation } from "@/graphql/generated";
 
 type State = {
   title: string;
-  categoryIds: string[];
+  categoryIds: number[];
 };
 
 type Action =
   | { type: "initialize" }
   | { type: "setTitle"; payload: string }
-  | { type: "setCategoryIds"; payload: string[] };
+  | { type: "setCategoryIds"; payload: number[] };
 
 const reducer: React.Reducer<State, Action> = (state, action) => {
   switch (action.type) {

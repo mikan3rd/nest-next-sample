@@ -6,7 +6,7 @@ import { Button, Checkbox, Popup } from "semantic-ui-react";
 import { useTaskContent } from "@/hooks/useTaskContent";
 
 export type TaskContentType = {
-  id: string;
+  id: number;
   checked: boolean;
   title: string;
   createdAt: number;

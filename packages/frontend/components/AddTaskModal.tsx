@@ -46,7 +46,7 @@ export const AddTaskModal = memo<{
             fluid
             multiple
             value={categoryIds}
-            onChange={(e, d) => dispatch({ type: "setCategoryIds", payload: d.value as string[] })}
+            onChange={(e, d) => dispatch({ type: "setCategoryIds", payload: d.value as number[] })}
           />
         </div>
       </Modal.Content>

@@ -3,7 +3,7 @@
 # ------------------------------------------------------
 
 type TaskContentModel {
-  id: ID!
+  id: Int!
   checked: Boolean!
   title: String!
   createdAt: Date!
@@ -15,7 +15,7 @@ type TaskContentModel {
 scalar Date
 
 type TaskModel {
-  id: ID!
+  id: Int!
   title: String!
   createdAt: Date!
   updatedAt: Date!
@@ -24,7 +24,7 @@ type TaskModel {
 }
 
 type CategoryModel {
-  id: ID!
+  id: Int!
   name: String!
   color: Color!
   createdAt: Date!
@@ -39,27 +39,27 @@ enum Color {
 }
 
 type Query {
-  task(id: ID!): TaskModel
+  task(id: Int!): TaskModel
   tasks: [TaskModel!]!
-  category(id: ID!): CategoryModel
+  category(id: Int!): CategoryModel
   categories: [CategoryModel!]!
-  taskContent(id: ID!): TaskContentModel
+  taskContent(id: Int!): TaskContentModel
   taskContents: [TaskContentModel!]!
 }
 
 type Mutation {
   saveTask(task: AddTaskInput!): TaskModel!
-  deleteTask(id: ID!): TaskModel
+  deleteTask(id: Int!): TaskModel
   saveCategory(category: AddCategoryInput!): CategoryModel!
-  deleteCategory(id: ID!): CategoryModel
+  deleteCategory(id: Int!): CategoryModel
   saveTaskContent(taskContent: AddTaskContentInput!): TaskContentModel!
   updateTaskContent(taskContent: UpdateTaskContentInput!): TaskContentModel!
-  deleteTaskContent(id: ID!): TaskContentModel
+  deleteTaskContent(id: Int!): TaskContentModel
 }
 
 input AddTaskInput {
   title: String!
-  categoryIds: [ID!]!
+  categoryIds: [Int!]!
 }
 
 input AddCategoryInput {
@@ -69,11 +69,11 @@ input AddCategoryInput {
 
 input AddTaskContentInput {
   title: String!
-  taskId: ID!
+  taskId: Int!
 }
 
 input UpdateTaskContentInput {
-  id: ID!
+  id: Int!
   checked: Boolean
   title: String
 }

@@ -50,7 +50,7 @@ export const useCategoryModal = ({ refetchCategories }: Props) => {
   }, [addCategory, color, refetchCategories, title]);
 
   const handleDeleteCategory = useCallback(
-    async (id: string) => {
+    async (id: number) => {
       await deleteCategory({ variables: { id } });
       await refetchCategories();
     },

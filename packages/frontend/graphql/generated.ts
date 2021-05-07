@@ -2,6 +2,9 @@ import { gql } from "@apollo/client";
 import * as Apollo from "@apollo/client";
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+const defaultOptions = {};
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -13,26 +16,23 @@ export type Scalars = {
   Date: number;
 };
 
-export type TaskContentModel = {
-  id: Scalars["ID"];
-  checked: Scalars["Boolean"];
-  title: Scalars["String"];
-  createdAt: Scalars["Date"];
-  updatedAt: Scalars["Date"];
-  task: TaskModel;
+export type AddCategoryInput = {
+  name: Scalars["String"];
+  color: Color;
 };
 
-export type TaskModel = {
-  id: Scalars["ID"];
+export type AddTaskContentInput = {
   title: Scalars["String"];
-  createdAt: Scalars["Date"];
-  updatedAt: Scalars["Date"];
-  taskContents: Array<TaskContentModel>;
-  categories: Array<CategoryModel>;
+  taskId: Scalars["Int"];
+};
+
+export type AddTaskInput = {
+  title: Scalars["String"];
+  categoryIds: Array<Scalars["Int"]>;
 };
 
 export type CategoryModel = {
-  id: Scalars["ID"];
+  id: Scalars["Int"];
   name: Scalars["String"];
   color: Color;
   createdAt: Scalars["Date"];
@@ -46,43 +46,14 @@ export enum Color {
   Green = "green",
 }
 
-export type Query = {
-  category?: Maybe<CategoryModel>;
-  categories: Array<CategoryModel>;
-  task?: Maybe<TaskModel>;
-  tasks: Array<TaskModel>;
-  taskContent?: Maybe<TaskContentModel>;
-  taskContents: Array<TaskContentModel>;
-};
-
-export type QueryCategoryArgs = {
-  id: Scalars["ID"];
-};
-
-export type QueryTaskArgs = {
-  id: Scalars["ID"];
-};
-
-export type QueryTaskContentArgs = {
-  id: Scalars["ID"];
-};
-
 export type Mutation = {
-  saveCategory: CategoryModel;
-  deleteCategory?: Maybe<CategoryModel>;
   saveTask: TaskModel;
   deleteTask?: Maybe<TaskModel>;
+  saveCategory: CategoryModel;
+  deleteCategory?: Maybe<CategoryModel>;
   saveTaskContent: TaskContentModel;
   updateTaskContent: TaskContentModel;
   deleteTaskContent?: Maybe<TaskContentModel>;
-};
-
-export type MutationSaveCategoryArgs = {
-  category: AddCategoryInput;
-};
-
-export type MutationDeleteCategoryArgs = {
-  id: Scalars["ID"];
 };
 
 export type MutationSaveTaskArgs = {
@@ -90,7 +61,15 @@ export type MutationSaveTaskArgs = {
 };
 
 export type MutationDeleteTaskArgs = {
-  id: Scalars["ID"];
+  id: Scalars["Int"];
+};
+
+export type MutationSaveCategoryArgs = {
+  category: AddCategoryInput;
+};
+
+export type MutationDeleteCategoryArgs = {
+  id: Scalars["Int"];
 };
 
 export type MutationSaveTaskContentArgs = {
@@ -102,26 +81,50 @@ export type MutationUpdateTaskContentArgs = {
 };
 
 export type MutationDeleteTaskContentArgs = {
-  id: Scalars["ID"];
+  id: Scalars["Int"];
 };
 
-export type AddCategoryInput = {
-  name: Scalars["String"];
-  color: Color;
+export type Query = {
+  task?: Maybe<TaskModel>;
+  tasks: Array<TaskModel>;
+  category?: Maybe<CategoryModel>;
+  categories: Array<CategoryModel>;
+  taskContent?: Maybe<TaskContentModel>;
+  taskContents: Array<TaskContentModel>;
 };
 
-export type AddTaskInput = {
+export type QueryTaskArgs = {
+  id: Scalars["Int"];
+};
+
+export type QueryCategoryArgs = {
+  id: Scalars["Int"];
+};
+
+export type QueryTaskContentArgs = {
+  id: Scalars["Int"];
+};
+
+export type TaskContentModel = {
+  id: Scalars["Int"];
+  checked: Scalars["Boolean"];
   title: Scalars["String"];
-  categoryIds: Array<Scalars["ID"]>;
+  createdAt: Scalars["Date"];
+  updatedAt: Scalars["Date"];
+  task: TaskModel;
 };
 
-export type AddTaskContentInput = {
+export type TaskModel = {
+  id: Scalars["Int"];
   title: Scalars["String"];
-  taskId: Scalars["ID"];
+  createdAt: Scalars["Date"];
+  updatedAt: Scalars["Date"];
+  taskContents: Array<TaskContentModel>;
+  categories: Array<CategoryModel>;
 };
 
 export type UpdateTaskContentInput = {
-  id: Scalars["ID"];
+  id: Scalars["Int"];
   checked?: Maybe<Scalars["Boolean"]>;
   title?: Maybe<Scalars["String"]>;
 };
@@ -133,7 +136,7 @@ export type AddCategoryMutationVariables = Exact<{
 export type AddCategoryMutation = { saveCategory: Pick<CategoryModel, "id"> };
 
 export type DeleteCategoryMutationVariables = Exact<{
-  id: Scalars["ID"];
+  id: Scalars["Int"];
 }>;
 
 export type DeleteCategoryMutation = { deleteCategory?: Maybe<Pick<CategoryModel, "id">> };
@@ -145,7 +148,7 @@ export type AddTaskMutationVariables = Exact<{
 export type AddTaskMutation = { saveTask: Pick<TaskModel, "id"> };
 
 export type DeleteTaskMutationVariables = Exact<{
-  id: Scalars["ID"];
+  id: Scalars["Int"];
 }>;
 
 export type DeleteTaskMutation = { deleteTask?: Maybe<Pick<TaskModel, "id">> };
@@ -163,7 +166,7 @@ export type UpdateTaskContentMutationVariables = Exact<{
 export type UpdateTaskContentMutation = { updateTaskContent: Pick<TaskContentModel, "id"> };
 
 export type DeleteTaskContentMutationVariables = Exact<{
-  id: Scalars["ID"];
+  id: Scalars["Int"];
 }>;
 
 export type DeleteTaskContentMutation = { deleteTaskContent?: Maybe<Pick<TaskContentModel, "id">> };
@@ -214,13 +217,14 @@ export type AddCategoryMutationFn = Apollo.MutationFunction<AddCategoryMutation,
 export function useAddCategoryMutation(
   baseOptions?: Apollo.MutationHookOptions<AddCategoryMutation, AddCategoryMutationVariables>,
 ) {
-  return Apollo.useMutation<AddCategoryMutation, AddCategoryMutationVariables>(AddCategoryDocument, baseOptions);
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<AddCategoryMutation, AddCategoryMutationVariables>(AddCategoryDocument, options);
 }
 export type AddCategoryMutationHookResult = ReturnType<typeof useAddCategoryMutation>;
 export type AddCategoryMutationResult = Apollo.MutationResult<AddCategoryMutation>;
 export type AddCategoryMutationOptions = Apollo.BaseMutationOptions<AddCategoryMutation, AddCategoryMutationVariables>;
 export const DeleteCategoryDocument = gql`
-  mutation deleteCategory($id: ID!) {
+  mutation deleteCategory($id: Int!) {
     deleteCategory(id: $id) {
       id
     }
@@ -248,10 +252,8 @@ export type DeleteCategoryMutationFn = Apollo.MutationFunction<DeleteCategoryMut
 export function useDeleteCategoryMutation(
   baseOptions?: Apollo.MutationHookOptions<DeleteCategoryMutation, DeleteCategoryMutationVariables>,
 ) {
-  return Apollo.useMutation<DeleteCategoryMutation, DeleteCategoryMutationVariables>(
-    DeleteCategoryDocument,
-    baseOptions,
-  );
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<DeleteCategoryMutation, DeleteCategoryMutationVariables>(DeleteCategoryDocument, options);
 }
 export type DeleteCategoryMutationHookResult = ReturnType<typeof useDeleteCategoryMutation>;
 export type DeleteCategoryMutationResult = Apollo.MutationResult<DeleteCategoryMutation>;
@@ -288,13 +290,14 @@ export type AddTaskMutationFn = Apollo.MutationFunction<AddTaskMutation, AddTask
 export function useAddTaskMutation(
   baseOptions?: Apollo.MutationHookOptions<AddTaskMutation, AddTaskMutationVariables>,
 ) {
-  return Apollo.useMutation<AddTaskMutation, AddTaskMutationVariables>(AddTaskDocument, baseOptions);
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<AddTaskMutation, AddTaskMutationVariables>(AddTaskDocument, options);
 }
 export type AddTaskMutationHookResult = ReturnType<typeof useAddTaskMutation>;
 export type AddTaskMutationResult = Apollo.MutationResult<AddTaskMutation>;
 export type AddTaskMutationOptions = Apollo.BaseMutationOptions<AddTaskMutation, AddTaskMutationVariables>;
 export const DeleteTaskDocument = gql`
-  mutation deleteTask($id: ID!) {
+  mutation deleteTask($id: Int!) {
     deleteTask(id: $id) {
       id
     }
@@ -322,7 +325,8 @@ export type DeleteTaskMutationFn = Apollo.MutationFunction<DeleteTaskMutation, D
 export function useDeleteTaskMutation(
   baseOptions?: Apollo.MutationHookOptions<DeleteTaskMutation, DeleteTaskMutationVariables>,
 ) {
-  return Apollo.useMutation<DeleteTaskMutation, DeleteTaskMutationVariables>(DeleteTaskDocument, baseOptions);
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<DeleteTaskMutation, DeleteTaskMutationVariables>(DeleteTaskDocument, options);
 }
 export type DeleteTaskMutationHookResult = ReturnType<typeof useDeleteTaskMutation>;
 export type DeleteTaskMutationResult = Apollo.MutationResult<DeleteTaskMutation>;
@@ -356,10 +360,8 @@ export type AddTaskContentMutationFn = Apollo.MutationFunction<AddTaskContentMut
 export function useAddTaskContentMutation(
   baseOptions?: Apollo.MutationHookOptions<AddTaskContentMutation, AddTaskContentMutationVariables>,
 ) {
-  return Apollo.useMutation<AddTaskContentMutation, AddTaskContentMutationVariables>(
-    AddTaskContentDocument,
-    baseOptions,
-  );
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<AddTaskContentMutation, AddTaskContentMutationVariables>(AddTaskContentDocument, options);
 }
 export type AddTaskContentMutationHookResult = ReturnType<typeof useAddTaskContentMutation>;
 export type AddTaskContentMutationResult = Apollo.MutationResult<AddTaskContentMutation>;
@@ -399,9 +401,10 @@ export type UpdateTaskContentMutationFn = Apollo.MutationFunction<
 export function useUpdateTaskContentMutation(
   baseOptions?: Apollo.MutationHookOptions<UpdateTaskContentMutation, UpdateTaskContentMutationVariables>,
 ) {
+  const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useMutation<UpdateTaskContentMutation, UpdateTaskContentMutationVariables>(
     UpdateTaskContentDocument,
-    baseOptions,
+    options,
   );
 }
 export type UpdateTaskContentMutationHookResult = ReturnType<typeof useUpdateTaskContentMutation>;
@@ -411,7 +414,7 @@ export type UpdateTaskContentMutationOptions = Apollo.BaseMutationOptions<
   UpdateTaskContentMutationVariables
 >;
 export const DeleteTaskContentDocument = gql`
-  mutation deleteTaskContent($id: ID!) {
+  mutation deleteTaskContent($id: Int!) {
     deleteTaskContent(id: $id) {
       id
     }
@@ -442,9 +445,10 @@ export type DeleteTaskContentMutationFn = Apollo.MutationFunction<
 export function useDeleteTaskContentMutation(
   baseOptions?: Apollo.MutationHookOptions<DeleteTaskContentMutation, DeleteTaskContentMutationVariables>,
 ) {
+  const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useMutation<DeleteTaskContentMutation, DeleteTaskContentMutationVariables>(
     DeleteTaskContentDocument,
-    baseOptions,
+    options,
   );
 }
 export type DeleteTaskContentMutationHookResult = ReturnType<typeof useDeleteTaskContentMutation>;
@@ -481,12 +485,14 @@ export const CategoriesDocument = gql`
  * });
  */
 export function useCategoriesQuery(baseOptions?: Apollo.QueryHookOptions<CategoriesQuery, CategoriesQueryVariables>) {
-  return Apollo.useQuery<CategoriesQuery, CategoriesQueryVariables>(CategoriesDocument, baseOptions);
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<CategoriesQuery, CategoriesQueryVariables>(CategoriesDocument, options);
 }
 export function useCategoriesLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<CategoriesQuery, CategoriesQueryVariables>,
 ) {
-  return Apollo.useLazyQuery<CategoriesQuery, CategoriesQueryVariables>(CategoriesDocument, baseOptions);
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<CategoriesQuery, CategoriesQueryVariables>(CategoriesDocument, options);
 }
 export type CategoriesQueryHookResult = ReturnType<typeof useCategoriesQuery>;
 export type CategoriesLazyQueryHookResult = ReturnType<typeof useCategoriesLazyQuery>;
@@ -530,10 +536,12 @@ export const TasksDocument = gql`
  * });
  */
 export function useTasksQuery(baseOptions?: Apollo.QueryHookOptions<TasksQuery, TasksQueryVariables>) {
-  return Apollo.useQuery<TasksQuery, TasksQueryVariables>(TasksDocument, baseOptions);
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<TasksQuery, TasksQueryVariables>(TasksDocument, options);
 }
 export function useTasksLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<TasksQuery, TasksQueryVariables>) {
-  return Apollo.useLazyQuery<TasksQuery, TasksQueryVariables>(TasksDocument, baseOptions);
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<TasksQuery, TasksQueryVariables>(TasksDocument, options);
 }
 export type TasksQueryHookResult = ReturnType<typeof useTasksQuery>;
 export type TasksLazyQueryHookResult = ReturnType<typeof useTasksLazyQuery>;

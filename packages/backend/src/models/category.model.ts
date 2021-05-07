@@ -1,4 +1,4 @@
-import { Field, ID, ObjectType, registerEnumType } from "@nestjs/graphql";
+import { Field, Int, ObjectType, registerEnumType } from "@nestjs/graphql";
 
 import { TaskModel } from "@/models/task.model";
 
@@ -12,7 +12,7 @@ registerEnumType(Color, { name: "Color" });
 
 @ObjectType()
 export class CategoryModel {
-  @Field((type) => ID)
+  @Field((type) => Int)
   id: number;
 
   @Field()

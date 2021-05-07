@@ -4,7 +4,7 @@ mutation addTask($task: AddTaskInput!) {
   }
 }
 
-mutation deleteTask($id: ID!) {
+mutation deleteTask($id: Int!) {
   deleteTask(id: $id) {
     id
   }

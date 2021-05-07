@@ -1,5 +1,5 @@
 import { Inject } from "@nestjs/common";
-import { Args, ID, Mutation, Query, Resolver } from "@nestjs/graphql";
+import { Args, Int, Mutation, Query, Resolver } from "@nestjs/graphql";
 
 import { AddTaskInput } from "@/dto/task.dto";
 import { TaskModel } from "@/models/task.model";
@@ -10,7 +10,7 @@ export class TaskResolver {
   constructor(@Inject(TaskService) private taskService: TaskService) {}
 
   @Query((returns) => TaskModel, { nullable: true })
-  async task(@Args("id", { type: () => ID }) id: number) {
+  async task(@Args("id", { type: () => Int }) id: number) {
     return await this.taskService.findOne(id);
   }
 
@@ -25,7 +25,7 @@ export class TaskResolver {
   }
 
   @Mutation((returns) => TaskModel, { nullable: true })
-  async deleteTask(@Args("id", { type: () => ID }) id: number) {
+  async deleteTask(@Args("id", { type: () => Int }) id: number) {
     return await this.taskService.delete(id);
   }
 }

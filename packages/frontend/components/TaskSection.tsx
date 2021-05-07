@@ -8,12 +8,12 @@ import { Color } from "@/graphql/generated";
 import { useTaskSection } from "@/hooks/useTaskSection";
 
 export type TaskType = {
-  id: string;
+  id: number;
   title: string;
   createdAt: number;
   updatedAt: number;
   categories: {
-    id: string;
+    id: number;
     name: string;
     color: Color;
   }[];
