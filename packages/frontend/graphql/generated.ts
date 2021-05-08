@@ -106,8 +106,8 @@ export type QueryTaskContentArgs = {
 };
 
 export type TaskCategoryRelation = {
-  task_id: Scalars["Int"];
-  category_id: Scalars["Int"];
+  taskId: Scalars["Int"];
+  categoryId: Scalars["Int"];
   task: TaskModel;
   category: CategoryModel;
 };

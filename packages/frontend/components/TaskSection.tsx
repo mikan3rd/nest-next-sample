@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 
 import { css } from "@emotion/react";
-import { Button, Header, Icon, Input, Label } from "semantic-ui-react";
+import { Button, Header, Icon, Input, Label, Segment } from "semantic-ui-react";
 
 import { TaskContent } from "@/components/TaskContent";
 import { TasksQuery } from "@/graphql/generated";
@@ -19,10 +19,12 @@ export const TaskSection = memo<{
   const { id, title, taskContents, taskCategoryRelation } = task;
 
   return (
-    <div
+    <Segment
       key={id}
       css={css`
-        margin-top: 32px;
+        &&& {
+          margin-top: 32px;
+        }
       `}
     >
       <div
@@ -136,6 +138,6 @@ export const TaskSection = memo<{
           </div>
         )}
       </div>
-    </div>
+    </Segment>
   );
 });

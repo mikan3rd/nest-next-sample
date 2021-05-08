@@ -15,10 +15,15 @@ type Action =
     }
   | { type: "setTmpTitle"; payload: string };
 
+const initialState: State = {
+  isActive: false,
+  tmpTitle: "",
+};
+
 const reducer: React.Reducer<State, Action> = (state, action) => {
   switch (action.type) {
     case "initialize":
-      return { ...state, isActive: false, tmpTitle: "", tmpChecked: false };
+      return { ...initialState };
     case "setIsActive":
       return { ...state, isActive: action.payload };
     case "setTmpTitle":
@@ -34,10 +39,7 @@ type Props = {
 };
 
 export const useTaskSection = ({ taskId, refetchTasks }: Props) => {
-  const [{ isActive, tmpTitle }, dispatch] = useReducer(reducer, {
-    isActive: false,
-    tmpTitle: "",
-  });
+  const [{ isActive, tmpTitle }, dispatch] = useReducer(reducer, { ...initialState });
 
   const [deleteTask] = useDeleteTaskMutation();
   const [saveTaskContent] = useAddTaskContentMutation();

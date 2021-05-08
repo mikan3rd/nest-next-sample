@@ -14,10 +14,16 @@ type Action =
   | { type: "setTitle"; payload: string }
   | { type: "setColor"; payload: Color };
 
+const initialState: State = {
+  isEditing: false,
+  title: "",
+  color: Color.Red,
+};
+
 const reducer: React.Reducer<State, Action> = (state, action) => {
   switch (action.type) {
     case "initialize":
-      return { ...state, isEditing: false, title: "" };
+      return { ...initialState };
     case "setIsEditing":
       return { ...state, isEditing: action.payload };
     case "setTitle":
@@ -37,11 +43,7 @@ export const useCategoryModal = ({ refetchCategories }: Props) => {
   const [addCategory] = useAddCategoryMutation();
   const [deleteCategory] = useDeleteCategoryMutation();
 
-  const [{ isEditing, title, color }, dispatch] = useReducer(reducer, {
-    isEditing: false,
-    title: "",
-    color: Color.Red,
-  });
+  const [{ isEditing, title, color }, dispatch] = useReducer(reducer, { ...initialState });
 
   const handleAddCategory = useCallback(async () => {
     await addCategory({ variables: { category: { name: title, color } } });

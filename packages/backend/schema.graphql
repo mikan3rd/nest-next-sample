@@ -3,8 +3,8 @@
 # ------------------------------------------------------
 
 type TaskCategoryRelation {
-  task_id: Int!
-  category_id: Int!
+  taskId: Int!
+  categoryId: Int!
   task: TaskModel!
   category: CategoryModel!
 }

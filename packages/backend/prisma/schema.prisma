@@ -38,14 +38,14 @@ model Task {
 }
 
 model TaskCategoryRelation {
-  task_id     Int
-  category_id Int
-  category    Category @relation(fields: [category_id], references: [id])
-  task        Task     @relation(fields: [task_id], references: [id])
+  taskId     Int
+  categoryId Int
+  category    Category @relation(fields: [categoryId], references: [id])
+  task        Task     @relation(fields: [taskId], references: [id])
 
-  @@id([task_id, category_id])
-  @@index([category_id], name: "TaskCategoryRelation.category_id_index")
-  @@index([task_id], name: "TaskCategoryRelation.task_id_index")
+  @@id([taskId, categoryId])
+  @@index([categoryId], name: "TaskCategoryRelation.categoryId_index")
+  @@index([taskId], name: "TaskCategoryRelation.taskId_index")
 }
 
 enum CategoryColor {

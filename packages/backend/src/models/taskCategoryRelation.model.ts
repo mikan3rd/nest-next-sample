@@ -6,10 +6,10 @@ import { TaskModel } from "@/models/task.model";
 @ObjectType()
 export class TaskCategoryRelation {
   @Field((type) => Int)
-  task_id!: number;
+  taskId!: number;
 
   @Field((type) => Int)
-  category_id!: number;
+  categoryId!: number;
 
   @Field((type) => TaskModel)
   task!: TaskModel;

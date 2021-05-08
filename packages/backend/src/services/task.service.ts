@@ -36,7 +36,7 @@ export class TaskService {
       data: {
         ...payload,
         taskCategoryRelation: {
-          createMany: { data: categoryIds.map((category_id) => ({ category_id })) },
+          createMany: { data: categoryIds.map((categoryId) => ({ categoryId })) },
         },
       },
     });
