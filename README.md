@@ -4,7 +4,7 @@
 
 - Backend
   - NestJS
-  - TypeORM
+  - Prisma
   - GraphQL
 - Frontend
   - Next.js / React
@@ -48,11 +48,7 @@ See `docker-compose.yaml` if you want to know more.
 Then create file `packages/backend/.env` and fill in the environment variables.
 
 ```.env.example
-DB_HOST="localhost"
-DB_PORT="3306"
-DB_USERNAME="root"
-DB_PASSWORD=""
-DB_NAME="nest_next_sample"
+DATABASE_URL="mysql://username:password@localhost:3306/nest_next_sample"
 ```
 
 
@@ -61,7 +57,7 @@ DB_NAME="nest_next_sample"
 ```bash
 cd packages/backend
 yarn install
-yarn migrate:run
+yarn migrate:deploy
 ```
 
 3. Run the startup command for backend.
@@ -93,7 +89,7 @@ After successful launch, go to http://localhost:3000 in your browser!
 
 ```graphql
 mutation {
-  saveTask(task: { title: "test", categoryIds: [1] }) {
+  saveTask(task: { title: "test", categoryIds: [] }) {
     id
     title
     categories {
