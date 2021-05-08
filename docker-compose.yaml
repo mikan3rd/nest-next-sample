@@ -3,13 +3,10 @@ version: "3"
 x-dev-base: &dev-base
   build: .
   environment:
-    DB_HOST: mysql
-    DB_PORT: 3306
-    DB_USERNAME: docker
-    DB_PASSWORD: docker
-    DB_NAME: nest_next_sample
+    DATABASE_URL: mysql://docker:docker@mysql:3306/nest_next_sample
     SERVER_APOLLO_URI: http://backend:3300
     PUBLIC_APOLLO_URI: http://localhost:3300
+    TZ: Asia/Tokyo
   volumes:
     - .:/app
     - /app/node_modules
@@ -36,7 +33,7 @@ services:
   migrate:
     << : *dev-base
     working_dir: /app/packages/backend
-    command: yarn migrate:run
+    command: yarn migrate:deploy
     depends_on:
       - mysql
 
@@ -44,6 +41,18 @@ services:
     << : *dev-base
     working_dir: /app/packages/backend
     command: yarn start:dev
+    tty: true
+    depends_on:
+      - mysql
+      - migrate
+    ports:
+      - "3300:3300"
+
+  backend-prod:
+    << : *dev-base
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
     tty: true
     depends_on:
       - mysql

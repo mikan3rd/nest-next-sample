@@ -1,53 +1,25 @@
-import { Field, ID, ObjectType } from "@nestjs/graphql";
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  JoinTable,
-  ManyToMany,
-  OneToMany,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from "typeorm";
+import { Field, Int, ObjectType } from "@nestjs/graphql";
 
-import { CategoryModel } from "@/models/category.model";
+import { TaskCategoryRelation } from "@/models/taskCategoryRelation.model";
 import { TaskContentModel } from "@/models/taskContent.model";
 
 @ObjectType()
-@Entity("tasks")
 export class TaskModel {
-  @Field((type) => ID)
-  @PrimaryGeneratedColumn()
+  @Field((type) => Int)
   id: number;
 
   @Field()
-  @Column()
   title: string;
 
   @Field()
-  @CreateDateColumn()
   createdAt: Date;
 
   @Field()
-  @UpdateDateColumn()
   updatedAt: Date;
 
-  @Field((type) => [TaskContentModel], { defaultValue: [] })
-  @OneToMany((type) => TaskContentModel, (taskContent) => taskContent.task)
+  @Field((type) => [TaskContentModel])
   taskContents: TaskContentModel[];
 
-  @Field((type) => [CategoryModel], { defaultValue: [] })
-  @ManyToMany((type) => CategoryModel, (category) => category.tasks)
-  @JoinTable({
-    name: "tasks_categories",
-    joinColumn: {
-      name: "task_id",
-      referencedColumnName: "id",
-    },
-    inverseJoinColumn: {
-      name: "category_id",
-      referencedColumnName: "id",
-    },
-  })
-  categories: CategoryModel[];
+  @Field((type) => [TaskCategoryRelation])
+  taskCategoryRelation: TaskCategoryRelation[];
 }

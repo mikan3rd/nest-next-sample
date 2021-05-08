@@ -1,34 +1,48 @@
 import { Injectable } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
 
 import { AddTaskInput } from "@/dto/task.dto";
-import { TaskModel } from "@/models/task.model";
-import { CategoryService } from "@/services/category.service";
+import { PrismaService } from "@/services/prisma.service";
 
 @Injectable()
 export class TaskService {
-  constructor(
-    @InjectRepository(TaskModel)
-    private taskRepository: Repository<TaskModel>,
-    private categoryService: CategoryService,
-  ) {}
+  constructor(private prisma: PrismaService) {}
 
   async findOne(id: number) {
-    return this.taskRepository.findOne(id, { relations: ["taskContents", "categories"] });
+    return await this.prisma.task.findUnique({
+      where: { id },
+      include: {
+        taskContents: true,
+        taskCategoryRelation: {
+          include: { category: true },
+        },
+      },
+    });
   }
 
   async findAll() {
-    return this.taskRepository.find({ order: { createdAt: "ASC" }, relations: ["taskContents", "categories"] });
+    return await this.prisma.task.findMany({
+      orderBy: { createdAt: "asc" },
+      include: {
+        taskContents: true,
+        taskCategoryRelation: {
+          include: { category: true },
+        },
+      },
+    });
   }
 
   async save({ categoryIds, ...payload }: AddTaskInput) {
-    const categories = await this.categoryService.findByIds(categoryIds);
-    return await this.taskRepository.save({ ...payload, categories });
+    return await this.prisma.task.create({
+      data: {
+        ...payload,
+        taskCategoryRelation: {
+          createMany: { data: categoryIds.map((categoryId) => ({ categoryId })) },
+        },
+      },
+    });
   }
 
   async delete(id: number) {
-    await this.taskRepository.delete(id);
-    return await this.findOne(id);
+    return await this.prisma.task.delete({ where: { id } });
   }
 }

@@ -1,6 +1,5 @@
 import React, { useCallback, useReducer } from "react";
 
-import { TaskType } from "@/components/TaskSection";
 import { useAddTaskContentMutation, useDeleteTaskMutation } from "@/graphql/generated";
 
 type State = {
@@ -16,10 +15,15 @@ type Action =
     }
   | { type: "setTmpTitle"; payload: string };
 
+const initialState: State = {
+  isActive: false,
+  tmpTitle: "",
+};
+
 const reducer: React.Reducer<State, Action> = (state, action) => {
   switch (action.type) {
     case "initialize":
-      return { ...state, isActive: false, tmpTitle: "", tmpChecked: false };
+      return { ...initialState };
     case "setIsActive":
       return { ...state, isActive: action.payload };
     case "setTmpTitle":
@@ -30,29 +34,26 @@ const reducer: React.Reducer<State, Action> = (state, action) => {
 };
 
 type Props = {
-  task: TaskType;
+  taskId: number;
   refetchTasks: () => Promise<unknown>;
 };
 
-export const useTaskSection = ({ task, refetchTasks }: Props) => {
-  const [{ isActive, tmpTitle }, dispatch] = useReducer(reducer, {
-    isActive: false,
-    tmpTitle: "",
-  });
+export const useTaskSection = ({ taskId, refetchTasks }: Props) => {
+  const [{ isActive, tmpTitle }, dispatch] = useReducer(reducer, { ...initialState });
 
   const [deleteTask] = useDeleteTaskMutation();
   const [saveTaskContent] = useAddTaskContentMutation();
 
   const handleAddTaskContent = useCallback(async () => {
-    await saveTaskContent({ variables: { taskContent: { title: tmpTitle, taskId: task.id } } });
+    await saveTaskContent({ variables: { taskContent: { title: tmpTitle, taskId } } });
     await refetchTasks();
     dispatch({ type: "initialize" });
-  }, [refetchTasks, saveTaskContent, task.id, tmpTitle]);
+  }, [refetchTasks, saveTaskContent, taskId, tmpTitle]);
 
   const handleDeleteTask = useCallback(async () => {
-    await deleteTask({ variables: { id: task.id } });
+    await deleteTask({ variables: { id: taskId } });
     await refetchTasks();
-  }, [deleteTask, refetchTasks, task.id]);
+  }, [deleteTask, refetchTasks, taskId]);
 
   return { isActive, tmpTitle, dispatch, handleAddTaskContent, handleDeleteTask };
 };

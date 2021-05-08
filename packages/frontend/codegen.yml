@@ -13,6 +13,3 @@ generates:
       skipTypename: true
       scalars:
         Date: number
-    hooks:
-      afterOneFileWrite:
-        - yarn lint --fix

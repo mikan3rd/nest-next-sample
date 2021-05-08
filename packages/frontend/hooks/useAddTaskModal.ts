@@ -4,18 +4,23 @@ import { useAddTaskMutation } from "@/graphql/generated";
 
 type State = {
   title: string;
-  categoryIds: string[];
+  categoryIds: number[];
 };
 
 type Action =
   | { type: "initialize" }
   | { type: "setTitle"; payload: string }
-  | { type: "setCategoryIds"; payload: string[] };
+  | { type: "setCategoryIds"; payload: number[] };
+
+const initialState: State = {
+  title: "",
+  categoryIds: [],
+};
 
 const reducer: React.Reducer<State, Action> = (state, action) => {
   switch (action.type) {
     case "initialize":
-      return { ...state, isActive: false, tmpTitle: "", tmpChecked: false };
+      return { ...initialState };
     case "setTitle":
       return { ...state, title: action.payload };
     case "setCategoryIds":
@@ -33,14 +38,12 @@ type Props = {
 export const useAddTaskModal = ({ setOpen, refetchTasks }: Props) => {
   const [addTask] = useAddTaskMutation();
 
-  const [{ title, categoryIds }, dispatch] = useReducer(reducer, {
-    title: "",
-    categoryIds: [],
-  });
+  const [{ title, categoryIds }, dispatch] = useReducer(reducer, { ...initialState });
 
   const handleAddTask = useCallback(async () => {
     await addTask({ variables: { task: { title, categoryIds } } });
     await refetchTasks();
+    dispatch({ type: "initialize" });
     setOpen(false);
   }, [addTask, categoryIds, refetchTasks, setOpen, title]);
 

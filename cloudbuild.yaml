@@ -25,14 +25,9 @@ steps:
       'run',
       '-v', 'cloudsql:/cloudsql',
       '-w', '/app/packages/backend',
-      '-e', 'DB_SOCKET_PATH=/cloudsql/${_CLOUD_SQL_CONNECTION_NAME}',
-      '-e', 'DB_HOST=/cloudsql/${_CLOUD_SQL_CONNECTION_NAME}',
-      '-e', 'DB_PORT=${_DB_PORT}',
-      '-e', 'DB_USERNAME=${_DB_USERNAME}',
-      '-e', 'DB_PASSWORD=${_DB_PASSWORD}',
-      '-e', 'DB_NAME=${_DB_NAME}',
+      '-e', 'DATABASE_URL=${_DATABASE_URL}',
       'gcr.io/$PROJECT_ID/build:$COMMIT_SHA',
-      'yarn', 'migrate:run'
+      'yarn', 'migrate:deploy'
     ]
     volumes:
       - name: cloudsql
@@ -63,12 +58,8 @@ steps:
       '--set-cloudsql-instances', '${_CLOUD_SQL_CONNECTION_NAME}',
       '--allow-unauthenticated',
       '--set-env-vars', '
-        DB_SOCKET_PATH=/cloudsql/${_CLOUD_SQL_CONNECTION_NAME},
-        DB_HOST=/cloudsql/${_CLOUD_SQL_CONNECTION_NAME},
-        DB_PORT=${_DB_PORT},
-        DB_USERNAME=${_DB_USERNAME},
-        DB_PASSWORD=${_DB_PASSWORD},
-        DB_NAME=${_DB_NAME}'
+        TZ=Asia/Tokyo,
+        DATABASE_URL=${_DATABASE_URL}'
     ]
 
 images:

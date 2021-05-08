@@ -4,7 +4,7 @@ mutation addCategory($category: AddCategoryInput!) {
   }
 }
 
-mutation deleteCategory($id: ID!) {
+mutation deleteCategory($id: Int!) {
   deleteCategory(id: $id) {
     id
   }

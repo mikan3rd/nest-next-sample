@@ -1,39 +1,35 @@
 import { Injectable } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
 
 import { AddTaskContentInput, UpdateTaskContentInput } from "@/dto/taskContent.dto";
-import { TaskContentModel } from "@/models/taskContent.model";
+import { PrismaService } from "@/services/prisma.service";
 import { TaskService } from "@/services/task.service";
 
 @Injectable()
 export class TaskContentService {
-  constructor(
-    @InjectRepository(TaskContentModel)
-    private taskContentRepository: Repository<TaskContentModel>,
-    private taskService: TaskService,
-  ) {}
+  constructor(private taskService: TaskService, private prisma: PrismaService) {}
 
   async findOne(id: number) {
-    return this.taskContentRepository.findOne(id, { relations: ["task"] });
+    return await this.prisma.taskContent.findUnique({ where: { id }, include: { task: true } });
   }
 
   async findAll() {
-    return this.taskContentRepository.find({ relations: ["task"] });
+    return await this.prisma.taskContent.findMany({ include: { task: true } });
   }
 
-  async save(payload: AddTaskContentInput) {
-    const task = await this.taskService.findOne(payload.taskId);
-    return this.taskContentRepository.save({ ...payload, task });
+  async save({ taskId, ...payload }: AddTaskContentInput) {
+    return await this.prisma.taskContent.create({
+      data: {
+        ...payload,
+        task: { connect: { id: taskId } },
+      },
+    });
   }
 
-  async update({ id, ...params }: UpdateTaskContentInput) {
-    this.taskContentRepository.update(id, { ...params });
-    return await this.findOne(id);
+  async update({ id, ...data }: UpdateTaskContentInput) {
+    return await this.prisma.taskContent.update({ where: { id }, data });
   }
 
   async delete(id: number) {
-    await this.taskContentRepository.delete(id);
-    return this.findOne(id);
+    return await this.prisma.taskContent.delete({ where: { id } });
   }
 }

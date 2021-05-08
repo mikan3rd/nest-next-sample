@@ -3,14 +3,14 @@ import React, { memo, useMemo } from "react";
 import { css } from "@emotion/react";
 import { Button, Dropdown, Input, Modal } from "semantic-ui-react";
 
-import { CategoryType } from "@/components/TaskList";
+import { CategoriesQuery } from "@/graphql/generated";
 import { useAddTaskModal } from "@/hooks/useAddTaskModal";
 
 export const AddTaskModal = memo<{
   open: boolean;
   setOpen: (open: boolean) => void;
   refetchTasks: () => Promise<unknown>;
-  categories: CategoryType[];
+  categories: CategoriesQuery["categories"];
 }>(({ open, setOpen, refetchTasks, categories }) => {
   const { title, categoryIds, dispatch, handleAddTask } = useAddTaskModal({ setOpen, refetchTasks });
 
@@ -46,7 +46,7 @@ export const AddTaskModal = memo<{
             fluid
             multiple
             value={categoryIds}
-            onChange={(e, d) => dispatch({ type: "setCategoryIds", payload: d.value as string[] })}
+            onChange={(e, d) => dispatch({ type: "setCategoryIds", payload: d.value as number[] })}
           />
         </div>
       </Modal.Content>

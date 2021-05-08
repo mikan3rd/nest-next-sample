@@ -5,20 +5,11 @@ import { Button } from "semantic-ui-react";
 
 import { AddTaskModal } from "@/components/AddTaskModal";
 import { CategoryModal } from "@/components/CategoryModal";
-import { TaskContentType } from "@/components/TaskContent";
-import { TaskSection, TaskType } from "@/components/TaskSection";
-import { Color, useCategoriesQuery } from "@/graphql/generated";
-
-export type CategoryType = {
-  id: string;
-  name: string;
-  color: Color;
-  createdAt: number;
-  updatedAt: number;
-};
+import { TaskSection } from "@/components/TaskSection";
+import { TasksQuery, useCategoriesQuery } from "@/graphql/generated";
 
 type Props = {
-  tasksData: (TaskType & { taskContents: TaskContentType[] })[];
+  tasksData: TasksQuery["tasks"];
   refetchTasks: () => Promise<unknown>;
 };
 
@@ -43,9 +34,8 @@ export const TaskList = memo<Props>(({ tasksData, refetchTasks }) => {
         <Button basic content="カテゴリ設定" color="blue" onClick={() => setCategoryModalOpen(true)} />
       </div>
       <div>
-        {tasksData.map((taskData) => {
-          const { taskContents, ...task } = taskData;
-          return <TaskSection key={task.id} task={task} taskContents={taskContents} refetchTasks={refetchTasks} />;
+        {tasksData.map((task) => {
+          return <TaskSection key={task.id} task={task} refetchTasks={refetchTasks} />;
         })}
         <AddTaskModal
           open={addTaskModalOpen}

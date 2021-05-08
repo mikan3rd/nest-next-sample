@@ -1,0 +1,55 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Category {
+  id                   Int                    @id @default(autoincrement())
+  name                 String                 @db.VarChar(255)
+  color                CategoryColor
+  createdAt            DateTime               @default(now()) @db.DateTime(6)
+  updatedAt            DateTime               @default(now()) @updatedAt @db.DateTime(6)
+  taskCategoryRelation TaskCategoryRelation[]
+}
+
+model TaskContent {
+  id        Int      @id @default(autoincrement())
+  checked   Boolean  @default(false) @db.TinyInt
+  title     String   @db.VarChar(255)
+  createdAt DateTime @default(now()) @db.DateTime(6)
+  updatedAt DateTime @default(now()) @updatedAt @db.DateTime(6)
+  taskId    Int
+  task      Task     @relation(fields: [taskId], references: [id])
+
+  @@index([taskId], name: "TaskContent.taskId_index")
+}
+
+model Task {
+  id                   Int                    @id @default(autoincrement())
+  title                String                 @db.VarChar(255)
+  createdAt            DateTime               @default(now()) @db.DateTime(6)
+  updatedAt            DateTime               @default(now()) @updatedAt @db.DateTime(6)
+  taskCategoryRelation TaskCategoryRelation[]
+  taskContents         TaskContent[]
+}
+
+model TaskCategoryRelation {
+  taskId     Int
+  categoryId Int
+  category    Category @relation(fields: [categoryId], references: [id])
+  task        Task     @relation(fields: [taskId], references: [id])
+
+  @@id([taskId, categoryId])
+  @@index([categoryId], name: "TaskCategoryRelation.categoryId_index")
+  @@index([taskId], name: "TaskCategoryRelation.taskId_index")
+}
+
+enum CategoryColor {
+  red
+  blue
+  green
+}
