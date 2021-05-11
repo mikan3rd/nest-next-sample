@@ -3,16 +3,16 @@ import { Field, InputType, Int } from "@nestjs/graphql";
 @InputType()
 export class AddTaskContentInput {
   @Field()
-  title: string;
+  title!: string;
 
   @Field((type) => Int)
-  taskId: number;
+  taskId!: number;
 }
 
 @InputType()
 export class UpdateTaskContentInput {
   @Field((type) => Int)
-  id: number;
+  id!: number;
 
   @Field({ nullable: true })
   checked?: boolean;

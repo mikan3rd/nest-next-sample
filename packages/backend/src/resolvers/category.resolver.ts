@@ -5,7 +5,7 @@ import { AddCategoryInput } from "@/dto/category.dto";
 import { CategoryModel } from "@/models/category.model";
 import { CategoryService } from "@/services/category.service";
 
-@Resolver((of) => CategoryModel)
+@Resolver()
 export class CategoryResolver {
   constructor(@Inject(CategoryService) private taskService: CategoryService) {}
 

@@ -13,20 +13,20 @@ registerEnumType(Color, { name: "Color" });
 @ObjectType()
 export class CategoryModel {
   @Field((type) => Int)
-  id: number;
+  id!: number;
 
   @Field()
-  name: string;
+  name!: string;
 
   @Field((type) => Color)
-  color: Color;
+  color!: Color;
 
   @Field()
-  createdAt: Date;
+  createdAt!: Date;
 
   @Field()
-  updatedAt: Date;
+  updatedAt!: Date;
 
   @Field((type) => TaskModel)
-  tasks: TaskModel[];
+  tasks!: TaskModel[];
 }
