@@ -5,16 +5,16 @@ import { Color } from "@/models/category.model";
 @InputType()
 export class AddCategoryInput {
   @Field()
-  name: string;
+  name!: string;
 
   @Field((type) => Color)
-  color: Color;
+  color!: Color;
 }
 
 @InputType()
 export class UpdateCategoryInput {
   @Field((type) => Int)
-  id: number;
+  id!: number;
 
   @Field()
   name?: string;

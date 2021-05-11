@@ -5,7 +5,7 @@ import { AddTaskInput } from "@/dto/task.dto";
 import { TaskModel } from "@/models/task.model";
 import { TaskService } from "@/services/task.service";
 
-@Resolver((of) => TaskModel)
+@Resolver()
 export class TaskResolver {
   constructor(@Inject(TaskService) private taskService: TaskService) {}
 

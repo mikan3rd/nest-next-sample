@@ -6,20 +6,20 @@ import { TaskContentModel } from "@/models/taskContent.model";
 @ObjectType()
 export class TaskModel {
   @Field((type) => Int)
-  id: number;
+  id!: number;
 
   @Field()
-  title: string;
+  title!: string;
 
   @Field()
-  createdAt: Date;
+  createdAt!: Date;
 
   @Field()
-  updatedAt: Date;
+  updatedAt!: Date;
 
   @Field((type) => [TaskContentModel])
-  taskContents: TaskContentModel[];
+  taskContents!: TaskContentModel[];
 
   @Field((type) => [TaskCategoryRelation])
-  taskCategoryRelation: TaskCategoryRelation[];
+  taskCategoryRelation!: TaskCategoryRelation[];
 }

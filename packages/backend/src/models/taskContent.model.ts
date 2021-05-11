@@ -5,20 +5,20 @@ import { TaskModel } from "@/models/task.model";
 @ObjectType()
 export class TaskContentModel {
   @Field((type) => Int)
-  id: number;
+  id!: number;
 
   @Field()
-  checked: boolean;
+  checked!: boolean;
 
   @Field()
-  title: string;
+  title!: string;
 
   @Field()
-  createdAt: Date;
+  createdAt!: Date;
 
   @Field()
-  updatedAt: Date;
+  updatedAt!: Date;
 
   @Field((type) => TaskModel)
-  task: TaskModel;
+  task!: TaskModel;
 }

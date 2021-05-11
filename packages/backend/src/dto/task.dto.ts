@@ -3,8 +3,8 @@ import { Field, InputType, Int } from "@nestjs/graphql";
 @InputType()
 export class AddTaskInput {
   @Field()
-  title: string;
+  title!: string;
 
   @Field((type) => [Int])
-  categoryIds: number[];
+  categoryIds!: number[];
 }

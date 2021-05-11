@@ -5,7 +5,7 @@ import { AddTaskContentInput, UpdateTaskContentInput } from "@/dto/taskContent.d
 import { TaskContentModel } from "@/models/taskContent.model";
 import { TaskContentService } from "@/services/taskContent.service";
 
-@Resolver((of) => TaskContentModel)
+@Resolver()
 export class TaskContentResolver {
   constructor(@Inject(TaskContentService) private taskContentService: TaskContentService) {}
 
