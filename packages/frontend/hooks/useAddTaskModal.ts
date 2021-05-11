@@ -26,7 +26,7 @@ const reducer: React.Reducer<State, Action> = (state, action) => {
     case "setCategoryIds":
       return { ...state, categoryIds: action.payload };
     default:
-      break;
+      return state;
   }
 };
 

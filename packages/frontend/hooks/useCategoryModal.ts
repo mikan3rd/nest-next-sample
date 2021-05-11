@@ -31,7 +31,7 @@ const reducer: React.Reducer<State, Action> = (state, action) => {
     case "setColor":
       return { ...state, color: action.payload };
     default:
-      break;
+      return state;
   }
 };
 

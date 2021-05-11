@@ -29,7 +29,7 @@ const reducer: React.Reducer<State, Action> = (state, action) => {
     case "setTmpTitle":
       return { ...state, tmpTitle: action.payload };
     default:
-      break;
+      return state;
   }
 };
 
