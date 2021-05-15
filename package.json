@@ -26,7 +26,7 @@
     "eslint-import-resolver-typescript": "2.4.0",
     "eslint-import-resolver-webpack": "0.13.1",
     "eslint-plugin-emotion": "11.0.0",
-    "eslint-plugin-import": "2.23.0",
+    "eslint-plugin-import": "2.23.1",
     "eslint-plugin-prettier": "3.4.0",
     "eslint-plugin-react": "7.23.2",
     "eslint-plugin-react-hooks": "4.2.0",
