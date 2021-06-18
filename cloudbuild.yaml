@@ -9,7 +9,7 @@ steps:
     ]
 
   - id: 'Run: cloudsql-proxy'
-    name: 'gcr.io/cloudsql-docker/gce-proxy:1.16'
+    name: 'gcr.io/cloudsql-docker/gce-proxy:1.17'
     args: [
       '/cloud_sql_proxy',
       '-dir=/cloudsql',
