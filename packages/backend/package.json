@@ -29,15 +29,15 @@
     "@nestjs/graphql": "7.11.0",
     "@nestjs/platform-express": "7.6.18",
     "@nestjs/schematics": "7.3.1",
-    "@prisma/client": "2.27.0",
+    "@prisma/client": "2.28.0",
     "apollo-server-express": "2.25.2",
     "graphql": "15.5.1",
     "graphql-tools": "7.0.5",
     "mysql": "2.18.1",
-    "prisma": "2.27.0",
+    "prisma": "2.28.0",
     "reflect-metadata": "0.1.13",
     "rimraf": "3.0.2",
-    "rxjs": "7.2.0"
+    "rxjs": "7.3.0"
   },
   "devDependencies": {
     "@nestjs/testing": "7.6.18",
