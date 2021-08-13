@@ -29,12 +29,12 @@
     "@nestjs/graphql": "7.11.0",
     "@nestjs/platform-express": "7.6.18",
     "@nestjs/schematics": "7.3.1",
-    "@prisma/client": "2.28.0",
+    "@prisma/client": "2.29.1",
     "apollo-server-express": "2.25.2",
     "graphql": "15.5.1",
     "graphql-tools": "7.0.5",
     "mysql": "2.18.1",
-    "prisma": "2.28.0",
+    "prisma": "2.29.1",
     "reflect-metadata": "0.1.13",
     "rimraf": "3.0.2",
     "rxjs": "7.3.0"
@@ -45,7 +45,7 @@
     "@types/jest": "26.0.24",
     "@types/supertest": "2.0.11",
     "jest": "27.0.6",
-    "supertest": "6.1.4",
+    "supertest": "6.1.5",
     "ts-jest": "27.0.4",
     "ts-loader": "9.2.5",
     "tsconfig-paths": "3.10.1"
