@@ -20,7 +20,7 @@ jobs:
         id: yarn-cache-backend-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
 
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         id: yarn-cache-backend
         with:
           path: ${{ steps.yarn-cache-backend-path.outputs.dir }}
@@ -69,7 +69,7 @@ jobs:
         id: yarn-cache-frontend-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
 
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         id: yarn-cache-frontend
         with:
           path: ${{ steps.yarn-cache-frontend-path.outputs.dir }}
