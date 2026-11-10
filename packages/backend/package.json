@@ -30,7 +30,7 @@
     "@nestjs/platform-express": "8.2.4",
     "@nestjs/schematics": "8.0.5",
     "@prisma/client": "2.30.3",
-    "apollo-server-express": "2.25.3",
+    "apollo-server-express": "3.13.0",
     "graphql": "15.7.2",
     "graphql-tools": "7.0.5",
     "mysql": "2.18.1",
