@@ -16,7 +16,7 @@ x-dev-base: &dev-base
 services:
 
   mysql:
-    image: mysql:8.0
+    image: mysql:8.4
     command: mysqld
     environment:
       MYSQL_ROOT_PASSWORD: root
